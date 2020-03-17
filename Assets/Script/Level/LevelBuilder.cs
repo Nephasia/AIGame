@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class LevelBuilder {
 
-	Vector2 dimensions;
+	public Vector2 Dimensions { get; private set; }
+
+	public ObstacleGenerator ObstacleGenerator { get; private set; }
+	//public Spawner Spawner { get; private set; }
 
 	public LevelBuilder() {
-		dimensions = new Vector2(100, 100);
-
+		Dimensions = new Vector2(100, 100);
+		ObstacleGenerator = new ObstacleGenerator(Dimensions);
+		//Spawner = new Spawner(Dimensions, ObstacleGenerator., , ObstacleGenerator.Obstacles);
 	}
 
 	public void BuildLevel() {
-		ObstacleGenerator obstacleGenerator = new ObstacleGenerator(dimensions);
-		obstacleGenerator.CreateObstacles();
+		ObstacleGenerator.CreateObstacles();
+		//Spawner.
 	}
 
 }

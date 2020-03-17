@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Obstacle {
 
+	public GameObject GameObject { get; set; }
+
 	public Vector3 Position { get; set; }
 	public Vector3 Scale { get; set; }
 
-	int minSize = 3;
-	int maxSize = 8;
+	int minSize = 5;
+	int maxSize = 15;
+
+	int height = 2;
 
 	public Obstacle(
 		Vector2 gridSize, int minBorderMargin, int minMarginBetweenObstacles,
@@ -32,13 +36,14 @@ public class Obstacle {
 
 			randPosition = new Vector3(
 				(int)Random.Range(0 + minBorderMargin, gridSize.x - minBorderMargin),
-				0,
+				height/2,
 				(int)Random.Range(0 + minBorderMargin, gridSize.y - minBorderMargin)
 			);
 
 			for (int i = 0; i < obstacles.Count; i++) {
+				Debug.Log(DistanceBetween(randPosition.x, Scale.x, obstacles[i].Position.x, obstacles[i].Scale.x));
 				if (DistanceBetween(randPosition.x, Scale.x, obstacles[i].Position.x, obstacles[i].Scale.x) < minMarginBetweenObstacles
-					|| DistanceBetween(randPosition.y, Scale.y, obstacles[i].Position.y, obstacles[i].Scale.y) < minMarginBetweenObstacles
+					|| DistanceBetween(randPosition.z, Scale.z, obstacles[i].Position.z, obstacles[i].Scale.z) < minMarginBetweenObstacles
 				) {
 					isClear = false;
 				}
@@ -51,7 +56,7 @@ public class Obstacle {
 	Vector3 RandScale() {
 		return new Vector3(
 			Random.Range(minSize, (float)maxSize),
-			0,
+			height,
 			Random.Range(minSize, (float)maxSize)
 		);
 	}

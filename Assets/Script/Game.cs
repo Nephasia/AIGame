@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Game {
 
+	public LevelBuilder LevelBuilder { get; private set; }
+
 	public Game() {
 
 	}
 
 	public void CreateGame() {
 
-		LevelBuilder levelBuilder = new LevelBuilder();
-		levelBuilder.BuildLevel();
+		LevelBuilder = new LevelBuilder();
+		LevelBuilder.BuildLevel();
 
 	}
 
