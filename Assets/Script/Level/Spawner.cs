@@ -38,7 +38,7 @@ class Spawner
             for (int i = 0; i < obstacles.Count; i++)
             {
                 if (DistanceBetween(randPosition.x, obstacles[i].Position.x, obstacles[i].Scale.x) < minMarginBetween
-                    || DistanceBetween(randPosition.y, obstacles[i].Position.y, obstacles[i].Scale.y) < minMarginBetween
+                    || DistanceBetween(randPosition.z, obstacles[i].Position.z, obstacles[i].Scale.z) < minMarginBetween
                 )
                 {
                     isClear = false;
