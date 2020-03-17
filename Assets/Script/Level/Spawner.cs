@@ -2,25 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 class Spawner
 {
-    public List<Vector3> SpawnPoints { get; set; }
+    public Vector3 SpawnPoint { get; set; }
 
-    int numberSpawnPoints = 4;
-
-    public Spawner(
-        Vector2 gridSize, int minBorderMargin, int minMarginBetween, List<Obstacle> obstacles)
+    public Spawner(Vector2 gridSize, int minBorderMargin, int minMarginBetween, List<Obstacle> obstacles)
     {
-        SpawnPoints = new List<Vector3>();
-        for (int i = 0; i < numberSpawnPoints; i++)
-        {
-            SpawnPoints.Add(CreateClearPosition(gridSize, minBorderMargin, minMarginBetween, obstacles));
-        }
+            SpawnPoint = CreateClearPosition(gridSize, minBorderMargin, minMarginBetween, obstacles);
     }
 
-    Vector3 CreateClearPosition(
-        Vector2 gridSize, int minBorderMargin, int minMarginBetween, List<Obstacle> obstacles)
+    Vector3 CreateClearPosition(Vector2 gridSize, int minBorderMargin, int minMarginBetween, List<Obstacle> obstacles)
     {
         Vector3 randPosition;
         bool isClear;
@@ -38,8 +29,7 @@ class Spawner
             for (int i = 0; i < obstacles.Count; i++)
             {
                 if (DistanceBetween(randPosition.x, obstacles[i].Position.x, obstacles[i].Scale.x) < minMarginBetween
-                    || DistanceBetween(randPosition.z, obstacles[i].Position.z, obstacles[i].Scale.z) < minMarginBetween
-                )
+                    || DistanceBetween(randPosition.z, obstacles[i].Position.z, obstacles[i].Scale.z) < minMarginBetween)
                 {
                     isClear = false;
                 }
