@@ -30,7 +30,7 @@ public class Opponent : IUpdateable, IGameObject {
     int[] VisionTable { get; set; }			// todo: powinna być oddzielna klasa - tablica pozycji
     float ShootTimeCD { get; set; }
 
-    float shootTime = 1;
+    float shootTime = 0.6f;
 	const float VisionAngle = 120;		// in degrees
 	const float VisionResolution = 1;	// in degrees
 	const float VisionRange = 40;
@@ -40,13 +40,15 @@ public class Opponent : IUpdateable, IGameObject {
 	const float AngularSpeed = 60;
 	Movement movement;
 
-    public Opponent(Vector3 position)
+	public bool CanMove { get; set; } = true;
+
+	public Opponent(Vector3 position)
     {
 		Game.RegisterUpdateable(this);
 		Id = OponentsCreated++;
 
 		GameObject = new GameObject();
-		GameObject.name = this.ToString() + Id;
+		GameObject.name = this.ToString() + "_" + Id;
 		GameObject.transform.position = position;
 
         int tableSize = ((int)((VisionAngle / 2) / VisionResolution)) * 2 + 1;
@@ -72,9 +74,30 @@ public class Opponent : IUpdateable, IGameObject {
 	}
 
 	private Inputs SimpleAI() {
-		
-        Inputs inputs = new Inputs(Inputs.MovementEnum.Forward, Inputs.RotationEnum.Left, true);
 
+		float randFloat = Random.Range(0, 1.0f);
+
+		Inputs.MovementEnum mov;
+
+		if (randFloat < 0.7f) {
+			mov = Inputs.MovementEnum.Forward;
+		} else if(randFloat >= 0.7f && randFloat < 0.8f) {
+			mov = Inputs.MovementEnum.Backward;
+		} else {
+			mov = Inputs.MovementEnum.None;
+		}
+
+		Inputs.RotationEnum rot;
+
+		if (randFloat < 0.7f) {
+			rot = Inputs.RotationEnum.Left;
+		} else if (randFloat >= 0.7f && randFloat < 0.8f) {
+			rot = Inputs.RotationEnum.Right;
+		} else {
+			rot = Inputs.RotationEnum.None;
+		}
+
+		Inputs inputs = new Inputs(mov, rot, true);
 		return inputs;
 	}
 
@@ -82,15 +105,15 @@ public class Opponent : IUpdateable, IGameObject {
         Bullet bullet = BulletGenerator.Instance.Pop();
         bullet.GameObject.transform.rotation = GameObject.transform.rotation;
         bullet.GameObject.transform.position = GameObject.transform.position;
-        Debug.Log(bullet.Position);
-        GameObject.transform.Translate(Vector3.forward);
+		bullet.GameObject.transform.Translate(Vector3.forward);
 	}
 
 	private void Die() {
-		throw new System.NotImplementedException();
+		CanMove = false;
+		GameObject.transform.position = Vector3.zero;
 	}
 
-	private void DealDamage(int damage) {
+	public void DealDamage(int damage) {
 		LifePoints -= damage;
 		if(LifePoints < 0) {
 			Die();

@@ -5,8 +5,14 @@ using System.Linq;
 
 public class OpponentsCreator : IObjectList {
 
+	public static OpponentsCreator Instance { get; private set; }
+
 	public List<Opponent> Opponents = new List<Opponent>();
 	public List<IGameObject> ObjectList => Opponents.ConvertAll(x => (IGameObject)x);
+
+	public OpponentsCreator() {
+		Instance = this;
+	}
 
 	public void CreateOpponents(int amount, SpawnerGenerator spawnerGenerator) {
 

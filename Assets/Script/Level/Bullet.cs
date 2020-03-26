@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Bullet : IGameObject, IUpdateable
 {
@@ -35,7 +36,7 @@ public class Bullet : IGameObject, IUpdateable
         Id = BulletsCreated++;
 
         GameObject = new GameObject();
-        GameObject.name = ToString() + Id;
+        GameObject.name = ToString() + "_" + Id;
         
         CurrentSpeed = speed;
         movement = new Movement(GameObject, speed, 0, 0);
@@ -58,7 +59,28 @@ public class Bullet : IGameObject, IUpdateable
             {
                 Destroy();
             }
-        }
+
+			RaycastHit hit;
+
+			float length = 0.3f;
+
+			if (Physics.Raycast(
+				GameObject.transform.position, GameObject.transform.TransformDirection(Vector3.forward), 
+				out hit, length)
+			) {
+
+				if(hit.collider.gameObject.name.Substring(0, hit.collider.gameObject.name.IndexOf("_")) == "Opponent") {
+					Debug.Log("MATCH");
+
+					Opponent o = OpponentsCreator.Instance.Opponents.Select(x => x)
+						.Where(x => x.GameObject.name == hit.collider.gameObject.name).First();
+
+					o.DealDamage(Damage);
+				}
+
+			}
+
+		}
         
     }
 

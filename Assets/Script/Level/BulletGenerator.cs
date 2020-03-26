@@ -5,24 +5,16 @@ using System.Linq;
 
 public class BulletGenerator : IObjectList
 {
-    public static BulletGenerator Instance
-    {
-        get
-        {
-            return _Instance;
-        }
-    }
+	public static BulletGenerator Instance { get; private set; }
 
-    private static BulletGenerator _Instance;
-
-    public List<Bullet> Bullets = new List<Bullet>();
+	public List<Bullet> Bullets = new List<Bullet>();
     public List<IGameObject> ObjectList => Bullets.ConvertAll(x => (IGameObject)x);
 
     int underBoard = -10;
 
     public BulletGenerator()
     {
-        _Instance = this;
+        Instance = this;
     }
     public void CreateBullets(int amount)
     {
@@ -42,7 +34,6 @@ public class BulletGenerator : IObjectList
 
     public Bullet Pop()
     {
-        Debug.Log(Bullets.Count);
         Bullet bullet = Bullets[0];
         Bullets.RemoveAt(0);
         bullet.Initialize();

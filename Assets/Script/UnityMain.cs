@@ -16,7 +16,7 @@ public class UnityMain : MonoBehaviour {
 
     void Update()
     {
-		game.MakeIteration();
+		game.MakeIteration(1);
 
 		// todo : updates position and rotation of all enemies
     }
@@ -26,8 +26,8 @@ public class UnityMain : MonoBehaviour {
 		SetUp("Obstacles", game.LevelBuilder.ObstacleGenerator, "Materials/Gray");
 		SetUp("Spawners", game.LevelBuilder.SpawnerGenerator, "Materials/Purple");
 
-		SetUpUpdateable("Enemy", game.LevelBuilder.OpponentsCreator, "Materials/Red");
-        SetUpUpdateable("Bullet", game.LevelBuilder.BulletGenerator, "Materials/Yellow");
+		SetUpUpdateable("Enemy", game.LevelBuilder.OpponentsCreator, "Materials/Red", Vector3.one);
+        SetUpUpdateable("Bullet", game.LevelBuilder.BulletGenerator, "Materials/Yellow", Vector3.one * 0.4f);
     }
 
 	void SetUpGround() {
@@ -48,7 +48,7 @@ public class UnityMain : MonoBehaviour {
 	void PrepateGameObject(IGameObject item, GameObject container, int id, string materialName) {
 		item.GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
 		item.GameObject.transform.SetParent(container.transform);
-		item.GameObject.name = item.ToString() + id;
+		item.GameObject.name = item.ToString() + "_" + id;
 
 		item.GameObject.transform.position = item.Position;
 		item.GameObject.transform.localScale = item.Scale;
@@ -56,20 +56,25 @@ public class UnityMain : MonoBehaviour {
 		item.GameObject.GetComponent<Renderer>().material = Resources.Load(materialName) as Material;
 	}
 
-	void SetUpUpdateable(string name, IObjectList generableObject, string materialName) {
+	void SetUpUpdateable(string name, IObjectList generableObject, string materialName, Vector3 scale) {
 		GameObject container = new GameObject(name + "Container");
 		foreach (var item in generableObject.ObjectList) {
-			PrepateUpdateableObjects(item, container, materialName);
+			PrepateUpdateableObjects(item, container, materialName, scale);
 		}
 	}
 
-	void PrepateUpdateableObjects(IGameObject item, GameObject container, string materialName) {
+	void PrepateUpdateableObjects(IGameObject item, GameObject container, string materialName, Vector3 scale) {
 		item.GameObject.AddComponent<MeshRenderer>();
 		MeshFilter mf = item.GameObject.AddComponent<MeshFilter>();
 		CreateCubeMesh(ref mf);
 
 		item.GameObject.transform.SetParent(container.transform);
 		item.GameObject.GetComponent<Renderer>().material = Resources.Load(materialName) as Material;
+
+		item.GameObject.AddComponent<BoxCollider>();
+
+		item.GameObject.transform.localScale = scale;
+
 	}
 
 	void CreateCubeMesh(ref MeshFilter mf) {

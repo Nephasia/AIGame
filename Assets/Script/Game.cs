@@ -7,7 +7,7 @@ public class Game {
 
 	public LevelBuilder LevelBuilder { get; private set; }
 
-	static HashSet<IUpdateable> Updateables = new HashSet<IUpdateable>();
+	public static List<IUpdateable> Updateables { get; private set; } = new List<IUpdateable>();
 
 	static float iterationsPerSecond = 60;
 	public static float IterationTime { get; private set; }
@@ -22,7 +22,7 @@ public class Game {
 		LevelBuilder.BuildLevel();
 
         LevelBuilder.CreateEnemies();
-        
+		LevelBuilder.CreateBullets();
 
     }
 
@@ -34,12 +34,16 @@ public class Game {
 
 	private void IterateGame() {
 		for (int i = 0; i < Updateables.Count; i++) {
-			Updateables.ElementAt(i).Update();
+			Updateables[i].Update();
 		}
 	}
 
 	public static void RegisterUpdateable(IUpdateable updateable) {
-		Updateables.Add(updateable);
+
+		if (!Updateables.Contains(updateable)) {
+			Updateables.Add(updateable);
+		}
+
 	}
 
 
