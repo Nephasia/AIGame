@@ -27,7 +27,8 @@ public class UnityMain : MonoBehaviour {
 		SetUp("Spawners", game.LevelBuilder.SpawnerGenerator, "Materials/Purple");
 
 		SetUpUpdateable("Enemy", game.LevelBuilder.OpponentsCreator, "Materials/Red");
-	}
+        SetUpUpdateable("Bullet", game.LevelBuilder.BulletGenerator, "Materials/Yellow");
+    }
 
 	void SetUpGround() {
 		GameObject go = GameObject.CreatePrimitive(PrimitiveType.Plane);

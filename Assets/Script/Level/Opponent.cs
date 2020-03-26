@@ -28,7 +28,9 @@ public class Opponent : IUpdateable, IGameObject {
     int Score { get; set; } = 0;
 
     int[] VisionTable { get; set; }			// todo: powinna być oddzielna klasa - tablica pozycji
-	
+    float ShootTimeCD { get; set; }
+
+    float shootTime = 1;
 	const float VisionAngle = 120;		// in degrees
 	const float VisionResolution = 1;	// in degrees
 	const float VisionRange = 40;
@@ -49,31 +51,39 @@ public class Opponent : IUpdateable, IGameObject {
 
         int tableSize = ((int)((VisionAngle / 2) / VisionResolution)) * 2 + 1;
         VisionTable = new int[tableSize];
-
-		movement = new Movement(GameObject, ForwardSpeed, BackwardSpeed, AngularSpeed);
+        ShootTimeCD = shootTime;
+        movement = new Movement(GameObject, ForwardSpeed, BackwardSpeed, AngularSpeed);
 
     }
 
 	public void Update() {
 		Inputs inputs = SimpleAI();
-
+        ShootTimeCD -= Game.IterationTime;
+        if (ShootTimeCD <= 0)
+        {
+            Shoot();
+            ShootTimeCD = shootTime;
+        }
 		lastPosition = GameObject.transform.position;
 		lastRotation = GameObject.transform.rotation;
-
+        
 		movement.HandleMovementInput(inputs.MovementType);
 		movement.HandleRotationInput(inputs.RotationType);
 	}
 
 	private Inputs SimpleAI() {
-		Inputs inputs = new Inputs(Inputs.MovementEnum.Forward, Inputs.RotationEnum.Left, false);
+		
+        Inputs inputs = new Inputs(Inputs.MovementEnum.Forward, Inputs.RotationEnum.Left, true);
+
 		return inputs;
 	}
 
 	private void Shoot() {
-		// todo : shoot - create new object as bullet
-		// set it in opponent position and rotation
-		// keep in mind bullets shoult not collide with us as opponent - maybe place it little ahead of us when creating
-		throw new System.NotImplementedException();
+        Bullet bullet = BulletGenerator.Instance.Pop();
+        bullet.GameObject.transform.rotation = GameObject.transform.rotation;
+        bullet.GameObject.transform.position = GameObject.transform.position;
+        Debug.Log(bullet.Position);
+        GameObject.transform.Translate(Vector3.forward);
 	}
 
 	private void Die() {

@@ -21,9 +21,10 @@ public class Game {
 		LevelBuilder = new LevelBuilder();
 		LevelBuilder.BuildLevel();
 
-		LevelBuilder.CreateEnemies();
+        LevelBuilder.CreateEnemies();
+        
 
-	}
+    }
 
 	public void MakeIteration(int iterations = 1) {
 		for (int i = 0; i < iterations; i++) {
