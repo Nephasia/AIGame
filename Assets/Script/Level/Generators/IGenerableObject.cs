@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IGameObject {
+public interface IGenerableObject {
 
-	GameObject GameObject{ get; set; }
+	void Create(bool avoidSelf = true);
+
+	
 
 }

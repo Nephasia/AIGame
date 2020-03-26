@@ -16,17 +16,16 @@ public class Obstacle : IGameObject {
 
 	public Obstacle(
 		Vector2 gridSize, int minBorderMargin, int minMarginBetweenObstacles,
-		List<Obstacle> obstacles
+		List<IGameObject> otherObjects
 	) {
 		Scale = RandScale();
-		Position = CreateClearPosition(gridSize, minBorderMargin, minMarginBetweenObstacles, obstacles);
+		Position = CreateClearPosition(gridSize, minBorderMargin, minMarginBetweenObstacles, otherObjects);
 	}
 
 	Vector3 CreateClearPosition(
 		Vector2 gridSize, int minBorderMargin, int minMarginBetweenObstacles,
-		List<Obstacle> obstacles
+		List<IGameObject> otherObjects
 	) {
-
 		Vector3 randPosition;
 
 		bool isClear;
@@ -40,9 +39,9 @@ public class Obstacle : IGameObject {
 				(int)Random.Range(0 + minBorderMargin, gridSize.y - minBorderMargin)
 			);
 
-			for (int i = 0; i < obstacles.Count; i++) {
-				if (DistanceBetween(randPosition.x, Scale.x, obstacles[i].Position.x, obstacles[i].Scale.x) < minMarginBetweenObstacles
-					&& DistanceBetween(randPosition.z, Scale.z, obstacles[i].Position.z, obstacles[i].Scale.z) < minMarginBetweenObstacles
+			for (int i = 0; i < otherObjects.Count; i++) {
+				if (DistanceBetween(randPosition.x, Scale.x, otherObjects[i].Position.x, otherObjects[i].Scale.x) < minMarginBetweenObstacles
+					&& DistanceBetween(randPosition.z, Scale.z, otherObjects[i].Position.z, otherObjects[i].Scale.z) < minMarginBetweenObstacles
 				) {
 					isClear = false;
 				}

@@ -16,8 +16,8 @@ public class LevelBuilder {
 	}
 
 	public void BuildLevel() {
-		ObstacleGenerator.CreateObstacles();
-		//Spawner.
+		ObstacleGenerator.Create();
+		SpawnerGenerator.Create(ObstacleGenerator.ObjectList);
 	}
 
 }

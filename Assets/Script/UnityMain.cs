@@ -47,7 +47,7 @@ public class UnityMain : MonoBehaviour {
 	}
 
 	void SetUpSpawners() {
-		foreach (var item in game.LevelBuilder.Obstacles) {
+		foreach (var item in game.LevelBuilder.SpawnerGenerator.Spawners) {
 
 			GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
