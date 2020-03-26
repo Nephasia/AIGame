@@ -2,12 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Opponent
-{
-    GameObject GameObject { get; set; }
+public class Opponent : IUpdateable, IGameObject {
+
+	public GameObject GameObject { get; set; }
+	public Vector3 Position {
+		get => GameObject.transform.position;
+		set => GameObject.transform.position = value;
+	}
+	public Vector3 Scale {
+		get => GameObject.transform.localScale;
+		set => GameObject.transform.localScale = value;
+	}
 
 	Vector3 lastPosition;
 	Quaternion lastRotation;
+
+	static int OponentsCreated = 0;
 
     int Id { get; set; }
 
@@ -22,28 +32,40 @@ public class Opponent
 	const float VisionAngle = 120;		// in degrees
 	const float VisionResolution = 1;	// in degrees
 	const float VisionRange = 40;
+
 	const float ForwardSpeed = 10;
 	const float BackwardSpeed = 6;
 	const float AngularSpeed = 60;
+	Movement movement;
 
-    public Opponent(float visionAngle, float visionResolution)
+    public Opponent(Vector3 position)
     {
-        int tableSize = ((int)((visionAngle / 2) / visionResolution)) * 2 + 1;
+		Game.RegisterUpdateable(this);
+		Id = OponentsCreated++;
+
+		GameObject = new GameObject();
+		GameObject.name = this.ToString() + Id;
+		GameObject.transform.position = position;
+
+        int tableSize = ((int)((VisionAngle / 2) / VisionResolution)) * 2 + 1;
         VisionTable = new int[tableSize];
+
+		movement = new Movement(GameObject, ForwardSpeed, BackwardSpeed, AngularSpeed);
+
     }
 
-	private void ChangePosition() {
-		lastPosition = GameObject.transform.position;
-		throw new System.NotImplementedException();
+	public void Update() {
+		//Inputs inputs = SimpleAI();
+
+		//lastPosition = GameObject.transform.position;
+		//lastRotation = GameObject.transform.rotation;
+
+		//movement.HandleMovementInput(inputs.MovementType);
+		//movement.HandleRotationInput(inputs.RotationType);
+
 	}
 
-	private void ChangeRotation() {
-		lastRotation = GameObject.transform.rotation;
-		throw new System.NotImplementedException();
-	}
-
-	private void WillColide() {
-		// todo: collision with environment
+	private Inputs SimpleAI() {
 		throw new System.NotImplementedException();
 	}
 
@@ -64,5 +86,5 @@ public class Opponent
 			Die();
 		}
 	}
-
+	
 }

@@ -12,63 +12,58 @@ public class UnityMain : MonoBehaviour {
 		game.CreateGame();
 
 		SetWholeLevel();
-
 	}
 
     void Update()
     {
-        
+		game.MakeIteration();
     }
 
 	void SetWholeLevel() {
 		SetUpGround();
-		SetUpObstacles();
-		SetUpSpawners();
+		SetUp("Obstacles", game.LevelBuilder.ObstacleGenerator, "Materials/Gray");
+		SetUp("Spawners", game.LevelBuilder.SpawnerGenerator, "Materials/Purple");
+
+		SetUpUpdateable("Enemy", game.LevelBuilder.OpponentsCreator, "Materials/Red");
 	}
 
 	void SetUpGround() {
-
 		GameObject go = GameObject.CreatePrimitive(PrimitiveType.Plane);
 		go.transform.localScale = new Vector3(game.LevelBuilder.Dimensions.x / 10, 1, game.LevelBuilder.Dimensions.y / 10);
 		go.transform.position = new Vector3(game.LevelBuilder.Dimensions.x / 2, 0, game.LevelBuilder.Dimensions.y / 2);
 	}
 
-	void SetUpObstacles() {
-
-		GameObject obstaclesContainer = new GameObject("ObstaclesContainer");
-
+	void SetUp(string name, IObjectList objectList, string materialName) {
+		GameObject container = new GameObject(name + "Container");
 		int id = 0;
-
-		foreach (var item in game.LevelBuilder.ObstacleGenerator.Obstacles) {
-
-			item.GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-			item.GameObject.transform.SetParent(obstaclesContainer.transform);
-			item.GameObject.name = item.ToString() + id++;
-
-			item.GameObject.transform.position = item.Position;
-			item.GameObject.transform.localScale = item.Scale;
-
-			item.GameObject.GetComponent<Renderer>().material = Resources.Load("Materials/Gray") as Material;
+		foreach (var item in objectList.ObjectList) {
+			PrepateGameObject(item, container, id, materialName);
+			id++;
 		}
 	}
 
-	void SetUpSpawners() {
+	void PrepateGameObject(IGameObject item, GameObject container, int id, string materialName) {
+		item.GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+		item.GameObject.transform.SetParent(container.transform);
+		item.GameObject.name = item.ToString() + id;
 
-		GameObject spawnersContainer = new GameObject("SpawnersContainer");
+		item.GameObject.transform.position = item.Position;
+		item.GameObject.transform.localScale = item.Scale;
 
-		int id = 0;
+		item.GameObject.GetComponent<Renderer>().material = Resources.Load(materialName) as Material;
+	}
 
-		foreach (var item in game.LevelBuilder.SpawnerGenerator.Spawners) {
-
-			item.GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-			item.GameObject.transform.SetParent(spawnersContainer.transform);
-			item.GameObject.name = item.ToString() + id++;
-
-			item.GameObject.transform.position = item.Position;
-			item.GameObject.transform.localScale = item.Scale;
-
-			item.GameObject.GetComponent<Renderer>().material = Resources.Load("Materials/Purple") as Material;
+	void SetUpUpdateable(string name, IObjectList generableObject, string materialName) {
+		GameObject container = new GameObject(name + "Container");
+		foreach (var item in generableObject.ObjectList) {
+			PrepateUpdateableObjects(item, container, materialName);
 		}
+	}
+
+	void PrepateUpdateableObjects(IGameObject item, GameObject container, string materialName) {
+		item.GameObject.AddComponent<MeshRenderer>();
+		item.GameObject.transform.SetParent(container.transform);
+		item.GameObject.GetComponent<Renderer>().material = Resources.Load(materialName) as Material;
 	}
 
 }

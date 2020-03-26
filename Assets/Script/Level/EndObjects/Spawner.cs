@@ -9,6 +9,7 @@ public class Spawner : IGameObject
 	public Vector3 Scale { get; set; }
 
 	float size = 0.5f;
+	float height = 1;
 
 	public Spawner(Vector2 gridSize, int minBorderMargin, int minMarginBetween, List<IGameObject> otherObjects)
     {
@@ -27,7 +28,7 @@ public class Spawner : IGameObject
 
             randPosition = new Vector3(
                 (int)Random.Range(0 + minBorderMargin, gridSize.x - minBorderMargin),
-                0,
+				height,
                 (int)Random.Range(0 + minBorderMargin, gridSize.y - minBorderMargin)
             );
 

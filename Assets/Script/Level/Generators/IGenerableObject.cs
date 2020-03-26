@@ -1,11 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IGenerableObject {
+﻿
+public interface IGenerableObject : IObjectList {
 
 	void Create(bool avoidSelf = true);
-
-	
 
 }
