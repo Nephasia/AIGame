@@ -17,6 +17,8 @@ public class UnityMain : MonoBehaviour {
     void Update()
     {
 		game.MakeIteration();
+
+		// todo : updates position and rotation of all enemies
     }
 
 	void SetWholeLevel() {
@@ -62,8 +64,21 @@ public class UnityMain : MonoBehaviour {
 
 	void PrepateUpdateableObjects(IGameObject item, GameObject container, string materialName) {
 		item.GameObject.AddComponent<MeshRenderer>();
+		MeshFilter mf = item.GameObject.AddComponent<MeshFilter>();
+		CreateCubeMesh(ref mf);
+
 		item.GameObject.transform.SetParent(container.transform);
 		item.GameObject.GetComponent<Renderer>().material = Resources.Load(materialName) as Material;
+	}
+
+	void CreateCubeMesh(ref MeshFilter mf) {
+		GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+		MeshFilter mf2 = go.GetComponent<MeshFilter>();
+		Mesh mesh = Instantiate(mf2.mesh) as Mesh;
+
+		mf.mesh = mesh;
+		Destroy(go);
 	}
 
 }

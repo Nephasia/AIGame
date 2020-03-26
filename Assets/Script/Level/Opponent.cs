@@ -55,18 +55,18 @@ public class Opponent : IUpdateable, IGameObject {
     }
 
 	public void Update() {
-		//Inputs inputs = SimpleAI();
+		Inputs inputs = SimpleAI();
 
-		//lastPosition = GameObject.transform.position;
-		//lastRotation = GameObject.transform.rotation;
+		lastPosition = GameObject.transform.position;
+		lastRotation = GameObject.transform.rotation;
 
-		//movement.HandleMovementInput(inputs.MovementType);
-		//movement.HandleRotationInput(inputs.RotationType);
-
+		movement.HandleMovementInput(inputs.MovementType);
+		movement.HandleRotationInput(inputs.RotationType);
 	}
 
 	private Inputs SimpleAI() {
-		throw new System.NotImplementedException();
+		Inputs inputs = new Inputs(Inputs.MovementEnum.Forward, Inputs.RotationEnum.Left, false);
+		return inputs;
 	}
 
 	private void Shoot() {
