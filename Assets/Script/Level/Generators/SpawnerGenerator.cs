@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnerGenerator : GenerableObject {
     Vector2 gridSize;
-    int amount = 20;
+    public int Amount { get; private set; } = 20;
     int minBorderMargin = 1;
     int minMarginBetween = 1;
 
@@ -18,7 +18,7 @@ public class SpawnerGenerator : GenerableObject {
 	
 	public override void Create(List<IGameObject> avoidObjects, bool avoidSelf = true)
     {
-        for (int i = 0; i < amount; i++)
+        for (int i = 0; i < Amount; i++)
         {
             Spawner spawner = new Spawner(gridSize, minBorderMargin, minMarginBetween, avoidObjects);
             Spawners.Add(spawner);
