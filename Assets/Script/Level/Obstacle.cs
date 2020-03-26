@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacle {
+public class Obstacle : IGameObject {
 
 	public GameObject GameObject { get; set; }
 
@@ -41,9 +41,8 @@ public class Obstacle {
 			);
 
 			for (int i = 0; i < obstacles.Count; i++) {
-				Debug.Log(DistanceBetween(randPosition.x, Scale.x, obstacles[i].Position.x, obstacles[i].Scale.x));
 				if (DistanceBetween(randPosition.x, Scale.x, obstacles[i].Position.x, obstacles[i].Scale.x) < minMarginBetweenObstacles
-					|| DistanceBetween(randPosition.z, Scale.z, obstacles[i].Position.z, obstacles[i].Scale.z) < minMarginBetweenObstacles
+					&& DistanceBetween(randPosition.z, Scale.z, obstacles[i].Position.z, obstacles[i].Scale.z) < minMarginBetweenObstacles
 				) {
 					isClear = false;
 				}

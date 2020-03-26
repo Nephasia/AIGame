@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstacleGenerator : IGenerableObject {
+public class SpawnerGenerator {
 
 	Vector2 gridSize;
 
@@ -13,9 +13,7 @@ public class ObstacleGenerator : IGenerableObject {
 
 	public List<Obstacle> Obstacles { get; private set; } = new List<Obstacle>();
 
-	public List<IGameObject> ObjectList => Obstacles.ConvertAll(x => (IGameObject)x);
-
-	public ObstacleGenerator(Vector2 gridSize) {
+	public SpawnerGenerator(Vector2 gridSize) {
 		this.gridSize = new Vector2(gridSize.x, gridSize.y);
 	}
 

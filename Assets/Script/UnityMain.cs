@@ -47,15 +47,15 @@ public class UnityMain : MonoBehaviour {
 	}
 
 	void SetUpSpawners() {
-		//foreach (var item in game.LevelBuilder.Obstacles) {
+		foreach (var item in game.LevelBuilder.Obstacles) {
 
-		//	GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-		//	go.transform.position = item.Position;
-		//	go.transform.localScale = item.Scale;
+			go.transform.position = item.Position;
+			go.transform.localScale = item.Scale;
 
-		//	go.GetComponent<Renderer>().material = Resources.Load("Materials/Gray") as Material;
-		//}
+			go.GetComponent<Renderer>().material = Resources.Load("Materials/Gray") as Material;
+		}
 	}
 
 }

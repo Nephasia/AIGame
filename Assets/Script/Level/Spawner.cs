@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-class Spawner
+class Spawner : IGameObject
 {
+	public GameObject GameObject { get; set; }
+
     public List<Vector3> SpawnPoints { get; set; }
 
     int numberSpawnPoints = 4;
@@ -38,13 +40,13 @@ class Spawner
             for (int i = 0; i < obstacles.Count; i++)
             {
                 if (DistanceBetween(randPosition.x, obstacles[i].Position.x, obstacles[i].Scale.x) < minMarginBetween
-                    || DistanceBetween(randPosition.z, obstacles[i].Position.z, obstacles[i].Scale.z) < minMarginBetween
+                    && DistanceBetween(randPosition.z, obstacles[i].Position.z, obstacles[i].Scale.z) < minMarginBetween
                 )
                 {
                     isClear = false;
                 }
             }
-        } while (!isClear);
+		} while (!isClear);
 
         return randPosition;
     }
