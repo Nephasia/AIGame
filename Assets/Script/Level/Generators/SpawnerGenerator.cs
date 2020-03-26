@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnerGenerator : GenerableObject {
     Vector2 gridSize;
-    int amount = 4;
+    int amount = 20;
     int minBorderMargin = 1;
     int minMarginBetween = 1;
 

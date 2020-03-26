@@ -5,16 +5,15 @@ using UnityEngine;
 public class Spawner : IGameObject
 {	
 	public GameObject GameObject { get; set; }
-    public Vector3 SpawnPoint { get; set; }
 	public Vector3 Position { get; set; }
 	public Vector3 Scale { get; set; }
 
-	float size = 0.1f;
+	float size = 0.5f;
 
 	public Spawner(Vector2 gridSize, int minBorderMargin, int minMarginBetween, List<IGameObject> otherObjects)
     {
 		Scale = Vector3.one * size;
-        SpawnPoint = CreateClearPosition(gridSize, minBorderMargin, minMarginBetween, otherObjects);
+		Position = CreateClearPosition(gridSize, minBorderMargin, minMarginBetween, otherObjects);
     }
 
     Vector3 CreateClearPosition(Vector2 gridSize, int minBorderMargin, int minMarginBetween, List<IGameObject> otherObjects)

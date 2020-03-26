@@ -35,26 +35,39 @@ public class UnityMain : MonoBehaviour {
 
 	void SetUpObstacles() {
 
+		GameObject obstaclesContainer = new GameObject("ObstaclesContainer");
+
+		int id = 0;
+
 		foreach (var item in game.LevelBuilder.ObstacleGenerator.Obstacles) {
 
-			GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			item.GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			item.GameObject.transform.SetParent(obstaclesContainer.transform);
+			item.GameObject.name = item.ToString() + id++;
 
-			go.transform.position = item.Position;
-			go.transform.localScale = item.Scale;
+			item.GameObject.transform.position = item.Position;
+			item.GameObject.transform.localScale = item.Scale;
 
-			go.GetComponent<Renderer>().material = Resources.Load("Materials/Gray") as Material;
+			item.GameObject.GetComponent<Renderer>().material = Resources.Load("Materials/Gray") as Material;
 		}
 	}
 
 	void SetUpSpawners() {
+
+		GameObject spawnersContainer = new GameObject("SpawnersContainer");
+
+		int id = 0;
+
 		foreach (var item in game.LevelBuilder.SpawnerGenerator.Spawners) {
 
-			GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			item.GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			item.GameObject.transform.SetParent(spawnersContainer.transform);
+			item.GameObject.name = item.ToString() + id++;
 
-			go.transform.position = item.Position;
-			go.transform.localScale = item.Scale;
+			item.GameObject.transform.position = item.Position;
+			item.GameObject.transform.localScale = item.Scale;
 
-			go.GetComponent<Renderer>().material = Resources.Load("Materials/Gray") as Material;
+			item.GameObject.GetComponent<Renderer>().material = Resources.Load("Materials/Purple") as Material;
 		}
 	}
 
