@@ -1,0 +1,26 @@
+C:\Users\Marcin\source\repos\NeuralNetwork\NeuralNetwork\bin\Debug\netcoreapp3.1\NeuralNetwork.exe
+C:\Users\Marcin\source\repos\NeuralNetwork\NeuralNetwork\bin\Debug\netcoreapp3.1\NeuralNetwork.deps.json
+C:\Users\Marcin\source\repos\NeuralNetwork\NeuralNetwork\bin\Debug\netcoreapp3.1\NeuralNetwork.runtimeconfig.json
+C:\Users\Marcin\source\repos\NeuralNetwork\NeuralNetwork\bin\Debug\netcoreapp3.1\NeuralNetwork.runtimeconfig.dev.json
+C:\Users\Marcin\source\repos\NeuralNetwork\NeuralNetwork\bin\Debug\netcoreapp3.1\NeuralNetwork.dll
+C:\Users\Marcin\source\repos\NeuralNetwork\NeuralNetwork\bin\Debug\netcoreapp3.1\NeuralNetwork.pdb
+C:\Users\Marcin\source\repos\NeuralNetwork\NeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetwork.csprojAssemblyReference.cache
+C:\Users\Marcin\source\repos\NeuralNetwork\NeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetwork.AssemblyInfoInputs.cache
+C:\Users\Marcin\source\repos\NeuralNetwork\NeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetwork.AssemblyInfo.cs
+C:\Users\Marcin\source\repos\NeuralNetwork\NeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetwork.dll
+C:\Users\Marcin\source\repos\NeuralNetwork\NeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetwork.pdb
+C:\Users\Marcin\source\repos\NeuralNetwork\NeuralNetwork\bin\Debug\netcoreapp3.1\MathNet.Numerics.dll
+C:\Users\Marcin\source\repos\NeuralNetwork\NeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetwork.csproj.CopyComplete
+D:\Marcin\Studia\Projekt zespołowy\AIGame\NeuralNetwork\NeuralNetwork\bin\Debug\netcoreapp3.1\NeuralNetwork.exe
+D:\Marcin\Studia\Projekt zespołowy\AIGame\NeuralNetwork\NeuralNetwork\bin\Debug\netcoreapp3.1\NeuralNetwork.deps.json
+D:\Marcin\Studia\Projekt zespołowy\AIGame\NeuralNetwork\NeuralNetwork\bin\Debug\netcoreapp3.1\NeuralNetwork.runtimeconfig.json
+D:\Marcin\Studia\Projekt zespołowy\AIGame\NeuralNetwork\NeuralNetwork\bin\Debug\netcoreapp3.1\NeuralNetwork.runtimeconfig.dev.json
+D:\Marcin\Studia\Projekt zespołowy\AIGame\NeuralNetwork\NeuralNetwork\bin\Debug\netcoreapp3.1\NeuralNetwork.dll
+D:\Marcin\Studia\Projekt zespołowy\AIGame\NeuralNetwork\NeuralNetwork\bin\Debug\netcoreapp3.1\NeuralNetwork.pdb
+D:\Marcin\Studia\Projekt zespołowy\AIGame\NeuralNetwork\NeuralNetwork\bin\Debug\netcoreapp3.1\MathNet.Numerics.dll
+D:\Marcin\Studia\Projekt zespołowy\AIGame\NeuralNetwork\NeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetwork.csprojAssemblyReference.cache
+D:\Marcin\Studia\Projekt zespołowy\AIGame\NeuralNetwork\NeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetwork.AssemblyInfoInputs.cache
+D:\Marcin\Studia\Projekt zespołowy\AIGame\NeuralNetwork\NeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetwork.AssemblyInfo.cs
+D:\Marcin\Studia\Projekt zespołowy\AIGame\NeuralNetwork\NeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetwork.csproj.CopyComplete
+D:\Marcin\Studia\Projekt zespołowy\AIGame\NeuralNetwork\NeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetwork.dll
+D:\Marcin\Studia\Projekt zespołowy\AIGame\NeuralNetwork\NeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetwork.pdb

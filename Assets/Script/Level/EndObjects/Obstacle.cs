@@ -2,65 +2,79 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacle : IGameObject {
+namespace Game
+{
 
-	public GameObject GameObject { get; set; }
+	public class Obstacle : IGameObject
+	{
 
-	public Vector3 Position { get; set; }
-	public Vector3 Scale { get; set; }
+		public GameObject GameObject { get; set; }
 
-	int minSize = 5;
-	int maxSize = 15;
+		public Vector3 Position { get; set; }
+		public Vector3 Scale { get; set; }
 
-	int height = 2;
+		int minSize = 5;
+		int maxSize = 15;
 
-	public Obstacle(
-		Vector2 gridSize, int minBorderMargin, int minMarginBetweenObstacles,
-		List<IGameObject> otherObjects
-	) {
-		Scale = RandScale();
-		Position = CreateClearPosition(gridSize, minBorderMargin, minMarginBetweenObstacles, otherObjects);
-	}
+		int height = 2;
 
-	Vector3 CreateClearPosition(
-		Vector2 gridSize, int minBorderMargin, int minMarginBetweenObstacles,
-		List<IGameObject> otherObjects
-	) {
-		Vector3 randPosition;
+		public Obstacle(
+			Vector2 gridSize, int minBorderMargin, int minMarginBetweenObstacles,
+			List<IGameObject> otherObjects
+		)
+		{
+			Scale = RandScale();
+			Position = CreateClearPosition(gridSize, minBorderMargin, minMarginBetweenObstacles, otherObjects);
+		}
 
-		bool isClear;
+		Vector3 CreateClearPosition(
+			Vector2 gridSize, int minBorderMargin, int minMarginBetweenObstacles,
+			List<IGameObject> otherObjects
+		)
+		{
+			Vector3 randPosition;
 
-		do {
-			isClear = true;
+			bool isClear;
 
-			randPosition = new Vector3(
-				(int)Random.Range(0 + minBorderMargin, gridSize.x - minBorderMargin),
-				height/2,
-				(int)Random.Range(0 + minBorderMargin, gridSize.y - minBorderMargin)
-			);
+			do
+			{
+				isClear = true;
 
-			for (int i = 0; i < otherObjects.Count; i++) {
-				if (DistanceBetween(randPosition.x, Scale.x, otherObjects[i].Position.x, otherObjects[i].Scale.x) < minMarginBetweenObstacles
-					&& DistanceBetween(randPosition.z, Scale.z, otherObjects[i].Position.z, otherObjects[i].Scale.z) < minMarginBetweenObstacles
-				) {
-					isClear = false;
+				randPosition = new Vector3(
+					(int)Random.Range(0 + minBorderMargin, gridSize.x - minBorderMargin),
+					height / 2,
+					(int)Random.Range(0 + minBorderMargin, gridSize.y - minBorderMargin)
+				);
+
+				for (int i = 0; i < otherObjects.Count; i++)
+				{
+					if (DistanceBetween(randPosition.x, Scale.x, otherObjects[i].Position.x, otherObjects[i].Scale.x) < minMarginBetweenObstacles
+						&& DistanceBetween(randPosition.z, Scale.z, otherObjects[i].Position.z, otherObjects[i].Scale.z) < minMarginBetweenObstacles
+					)
+					{
+						isClear = false;
+					}
 				}
-			}
-		} while (!isClear);
+			} while (!isClear);
 
-		return randPosition;
+			return randPosition;
+		}
+
+		Vector3 RandScale()
+		{
+			return new Vector3(
+				Random.Range(minSize, (float)maxSize),
+				height,
+				Random.Range(minSize, (float)maxSize)
+			);
+		}
+
+		float DistanceBetween(float firstPos, float firstSize, float secondPos, float secondSize)
+		{
+			return Mathf.Abs(firstPos - secondPos) - firstSize / 2 - secondSize / 2;
+		}
+
 	}
 
-	Vector3 RandScale() {
-		return new Vector3(
-			Random.Range(minSize, (float)maxSize),
-			height,
-			Random.Range(minSize, (float)maxSize)
-		);
-	}
-
-	float DistanceBetween(float firstPos, float firstSize, float secondPos, float secondSize) {
-		return Mathf.Abs(firstPos - secondPos) - firstSize/2 - secondSize/2;
-	}
 
 }

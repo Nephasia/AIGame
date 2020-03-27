@@ -1,6 +1,9 @@
-﻿
-public interface IGenerableObject : IObjectList {
+﻿namespace Game
+{
+	public interface IGenerableObject : IObjectList
+	{
 
-	void Create(bool avoidSelf = true);
+		void Create(bool avoidSelf = true);
 
+	}
 }

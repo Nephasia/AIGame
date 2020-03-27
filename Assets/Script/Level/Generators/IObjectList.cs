@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
 
-public interface IObjectList {
-	List<IGameObject> ObjectList { get; }
+namespace Game
+{
+	public interface IObjectList
+	{
+		List<IGameObject> ObjectList { get; }
+	}
 }

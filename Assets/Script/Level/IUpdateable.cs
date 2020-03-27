@@ -1,3 +1,9 @@
-﻿public interface IUpdateable {
-	void Update();
+﻿namespace Game
+{
+
+	public interface IUpdateable
+	{
+		void Update();
+	}
+
 }
