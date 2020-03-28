@@ -27,7 +27,7 @@ namespace Game
 			Shoot
 		}
 
-		public ShootEnum Shoot { get; }
+		public ShootEnum ShootState { get; }
 		public MovementEnum MovementType { get; }
 		public RotationEnum RotationType { get; }
 
@@ -35,7 +35,7 @@ namespace Game
 		{
 			this.MovementType = movementType;
 			this.RotationType = rotationType;
-			this.Shoot = shoot;
+			this.ShootState = shoot;
 		}
 
 		public Inputs(int i1, int i2, int i3): this((MovementEnum)i1, (RotationEnum)i2, (ShootEnum)i3)

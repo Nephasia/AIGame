@@ -13,10 +13,16 @@ namespace Game
 		public Vector3 Position { get; set; }
 		public Vector3 Scale { get; set; }
 
-		int minSize = 5;
+        int minSize = 5;
 		int maxSize = 15;
 
 		int height = 2;
+
+        public Obstacle(Vector3 position, Vector3 scale)
+        {
+            this.Position = position;
+            this.Scale = scale;
+        }
 
 		public Obstacle(
 			Vector2 gridSize, int minBorderMargin, int minMarginBetweenObstacles,

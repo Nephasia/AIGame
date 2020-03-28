@@ -37,8 +37,21 @@ namespace Game
 					avoidObjects.Add(obstacle);
 				}
 			}
-
+            CreateBoarders();
 		}
+
+        private void CreateBoarders()
+        {
+            int boarderWidth = 1;
+            Obstacle obstacle = new Obstacle(new Vector3(Game.LevelBuilder.Dimensions.x / 2, 1,0), new Vector3(Game.LevelBuilder.Dimensions.x, boarderWidth, boarderWidth));
+            Obstacles.Add(obstacle);
+            obstacle = new Obstacle(new Vector3(Game.LevelBuilder.Dimensions.x / 2, 1, Game.LevelBuilder.Dimensions.y), new Vector3(Game.LevelBuilder.Dimensions.x, boarderWidth, boarderWidth));
+            Obstacles.Add(obstacle);
+            obstacle = new Obstacle(new Vector3(0, 1, Game.LevelBuilder.Dimensions.y / 2), new Vector3(boarderWidth, boarderWidth, Game.LevelBuilder.Dimensions.y));
+            Obstacles.Add(obstacle);
+            obstacle = new Obstacle(new Vector3(Game.LevelBuilder.Dimensions.x, 1, Game.LevelBuilder.Dimensions.y / 2), new Vector3(boarderWidth, boarderWidth, Game.LevelBuilder.Dimensions.y));
+            Obstacles.Add(obstacle);
+        }
 
 	}
 }

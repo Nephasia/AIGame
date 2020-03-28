@@ -25,7 +25,9 @@ namespace Game
 
 		static int OponentsCreated = 0;
 
-		int Id { get; set; }
+		public int Id { get; private set; }
+
+        Weapon weapon;
 
 		int LifePoints { get; set; } = 100;
 
@@ -34,9 +36,7 @@ namespace Game
 		int Score { get; set; } = 0;
 
 		int[] VisionTable { get; set; }         // todo: powinna być oddzielna klasa - tablica pozycji
-		float ShootTimeCD { get; set; }
-
-		float shootTime = 0.6f;
+		
 		const float VisionAngle = 120;      // in degrees
 		const float VisionResolution = 1;   // in degrees
 		const float VisionRange = 40;
@@ -46,7 +46,7 @@ namespace Game
 		const float AngularSpeed = 60;
 		Movement movement;
 
-		public bool CanMove { get; set; } = true;
+		public bool IsAlive { get; set; } = true;
 
 		public Opponent(Vector3 position)
 		{
@@ -56,35 +56,41 @@ namespace Game
 			GameObject = new GameObject();
 			GameObject.name = this.ToString() + "_" + Id;
 			GameObject.transform.position = position;
+            GameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
 
 			int tableSize = ((int)((VisionAngle / 2) / VisionResolution)) * 2 + 1;
 			VisionTable = new int[tableSize];
-			ShootTimeCD = shootTime;
+			
 			movement = new Movement(GameObject, ForwardSpeed, BackwardSpeed, AngularSpeed);
 
+            weapon = new Weapon();
 		}
 
 		public void Update()
 		{
+            weapon.Reload();
 
 			NeuralNetwork n = new NeuralNetwork(1,10);
 			NeuralNetworkVariable n1, n2, n3;
 			(n1, n2, n3) = n.Learn(0,0,0);
 			int nn1, nn2, nn3;
 			(nn1, nn2, nn3) = InputAdapter.ConvertToInput(n1, n2, n3);
-			Inputs inputs = new Inputs(nn1,nn2,nn3);
-			ShootTimeCD -= Game.IterationTime;
-			if (ShootTimeCD <= 0)
-			{
-				Shoot();
-				ShootTimeCD = shootTime;
-			}
+            Inputs inputs = SimpleAI();//new Inputs(nn1,nn2,nn3);
+			
 			lastPosition = GameObject.transform.position;
 			lastRotation = GameObject.transform.rotation;
 
-			movement.HandleMovementInput(inputs.MovementType);
-			movement.HandleRotationInput(inputs.RotationType);
-		}
+            if (IsAlive) {
+                movement.HandleMovementInput(inputs.MovementType);
+                movement.HandleRotationInput(inputs.RotationType);
+
+                if (inputs.ShootState == Inputs.ShootEnum.Shoot)
+                {
+                    weapon.Shoot(GameObject);
+                }
+            }
+            
+        }
 
 		private Inputs SimpleAI()
 		{
@@ -125,18 +131,11 @@ namespace Game
 			return inputs;
 		}
 
-		private void Shoot()
-		{
-			Bullet bullet = BulletGenerator.Instance.Pop();
-			bullet.GameObject.transform.rotation = GameObject.transform.rotation;
-			bullet.GameObject.transform.position = GameObject.transform.position;
-			bullet.GameObject.transform.Translate(Vector3.forward);
-		}
-
 		private void Die()
 		{
-			CanMove = false;
-			GameObject.transform.position = Vector3.zero;
+			IsAlive = false;
+			GameObject.transform.position = new Vector3(0, -20, 0);
+            OpponentsCreator.Instance.AliveOpponents.Remove(Id);
 		}
 
 		public void DealDamage(int damage)
