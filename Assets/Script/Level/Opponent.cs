@@ -20,19 +20,23 @@ namespace Game
 			set => GameObject.transform.localScale = value;
 		}
 
-		Vector3 lastPosition;
-		Quaternion lastRotation;
+        public Vector3 LastPosition { get; private set; }
+		public Quaternion LastRotation { get; private set; }
+
+        public Statistics Statistics { get; set; }
 
 		static int OponentsCreated = 0;
 
 		public int Id { get; private set; }
 
-        Weapon weapon;
+        Weapon weapon; //TODO: ilość wystrzelonych pocisków
 
 		int LifePoints { get; set; } = 100;
 
+        //TODO: punktowanie za zabicie i trafienie
 		int KillCount { get; set; } = 0;
 
+        //TODO: co to ma być???
 		int Score { get; set; } = 0;
 
 		int[] VisionTable { get; set; }         // todo: powinna być oddzielna klasa - tablica pozycji
@@ -57,28 +61,33 @@ namespace Game
 			GameObject.name = this.ToString() + "_" + Id;
 			GameObject.transform.position = position;
             GameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+            LastPosition = Position;
+            LastRotation = GameObject.transform.rotation;
 
-			int tableSize = ((int)((VisionAngle / 2) / VisionResolution)) * 2 + 1;
+            int tableSize = ((int)((VisionAngle / 2) / VisionResolution)) * 2 + 1;
 			VisionTable = new int[tableSize];
 			
 			movement = new Movement(GameObject, ForwardSpeed, BackwardSpeed, AngularSpeed);
 
             weapon = new Weapon();
+
+            Statistics = new Statistics(movement);
 		}
 
 		public void Update()
 		{
             weapon.Reload();
+            RefreshStatistics();
 
-			NeuralNetwork n = new NeuralNetwork(1,10);
+            NeuralNetwork n = new NeuralNetwork(1,10);
 			NeuralNetworkVariable n1, n2, n3;
 			(n1, n2, n3) = n.Learn(0,0,0);
 			int nn1, nn2, nn3;
 			(nn1, nn2, nn3) = InputAdapter.ConvertToInput(n1, n2, n3);
             Inputs inputs = SimpleAI();//new Inputs(nn1,nn2,nn3);
-			
-			lastPosition = GameObject.transform.position;
-			lastRotation = GameObject.transform.rotation;
+
+			LastPosition = Position;
+			LastRotation = GameObject.transform.rotation;
 
             if (IsAlive) {
                 movement.HandleMovementInput(inputs.MovementType);
@@ -89,7 +98,12 @@ namespace Game
                     weapon.Shoot(GameObject);
                 }
             }
-            
+        }
+
+        private void RefreshStatistics()
+        {
+            Statistics.Distance += (Position - LastPosition).magnitude;
+            Statistics.IsMoving(Position, LastPosition);
         }
 
 		private Inputs SimpleAI()

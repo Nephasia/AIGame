@@ -77,7 +77,7 @@ namespace Game
 			GameObject.transform.Rotate(Vector3.up, AngularSpeed * Game.IterationTime);
 		}
 
-        private bool CanMove(Vector3 direction)
+        public bool CanMove(Vector3 direction)
         {
             RaycastHit hit;
 
