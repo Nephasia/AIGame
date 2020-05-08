@@ -43,13 +43,13 @@ namespace Game
 
             CurrentSpeed = speed;
             movement = new Movement(GameObject, speed, 0, 0);
-
         }
 
-        public void Initialize()
+        public void Initialize(int OpponentId)
         {
             LifeTimeCD = lifeTime;
             active = true;
+            this.OpponentId = OpponentId;
         }
 
         public void Update()
@@ -92,6 +92,13 @@ namespace Game
                         .Where(x => x.GameObject.name == nameOfHittedObject).First();
 
             o.DealDamage(Damage);
+
+            Opponent killer = OpponentsCreator.Instance.Opponents.Select(x => x)
+                        .Where(x => x.Id == OpponentId).First();
+
+            killer.AddHitCount();
+
+            if(!o.IsAlive) killer.AddKillCount();
         }
 
         public void Destroy()

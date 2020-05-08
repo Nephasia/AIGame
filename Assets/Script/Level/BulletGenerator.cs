@@ -15,6 +15,7 @@ namespace Game
 
         public BulletGenerator()
         {
+            Instance = null;
             Instance = this;
         }
         public void CreateBullets(int amount)
@@ -33,11 +34,11 @@ namespace Game
             Bullets.Add(bullet);
         }
 
-        public Bullet Pop()
+        public Bullet Pop(int OpponentId)
         {
             Bullet bullet = Bullets[0];
             Bullets.RemoveAt(0);
-            bullet.Initialize();
+            bullet.Initialize(OpponentId);
             return bullet;
         }
     }

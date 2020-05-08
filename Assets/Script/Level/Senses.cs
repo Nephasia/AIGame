@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace Game
 {
-    public class Statistics
+    public class Senses
     {
         Movement movement;
         public float Distance = 0;
         
 
-        public Statistics(Movement movement)
+        public Senses(Movement movement)
         {
             this.movement = movement;
         }

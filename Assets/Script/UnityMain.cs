@@ -9,17 +9,38 @@ namespace Game
 
 		Game game;
 
-		void Start()
-		{
-			game = new Game();
-			game.CreateGame();
+		bool isGameCreated = false;
 
-			SetWholeLevel();
-		}
+		float gameTime = 3;//2 * 60;
+		float gameTimeCD;
+
+		uint iterationSpeed = 1;
 
 		void Update()
 		{
-			game.MakeIteration(1);
+
+			if (!isGameCreated) {
+
+				game = new Game();
+				game.CreateGame();
+
+				SetWholeLevel();
+				
+				isGameCreated = true;
+				gameTimeCD = gameTime;
+
+
+			} else {
+				// todo: the same when only one opponent left
+				if(gameTimeCD <= 0) {
+					isGameCreated = false;
+					RemoveWholeLevel();
+				} else {
+					game.MakeIteration((int)iterationSpeed);
+					gameTimeCD -= Time.deltaTime * iterationSpeed;
+				}
+
+			}
 
 			// todo : updates position and rotation of all enemies
 		}
@@ -32,6 +53,16 @@ namespace Game
 
 			SetUpUpdateable("Enemy", Game.LevelBuilder.OpponentsCreator, "Materials/Red", Vector3.one);
 			SetUpUpdateable("Bullet", Game.LevelBuilder.BulletGenerator, "Materials/Yellow", Vector3.one * 0.4f);
+		}
+
+		void RemoveWholeLevel() {
+
+			Destroy(GameObject.Find("Plane"));
+			Destroy(GameObject.Find("ObstaclesContainer"));
+			Destroy(GameObject.Find("SpawnersContainer"));
+			Destroy(GameObject.Find("EnemyContainer"));
+			Destroy(GameObject.Find("BulletContainer"));
+			
 		}
 
 		void SetUpGround()
