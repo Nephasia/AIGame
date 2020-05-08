@@ -6,9 +6,8 @@ using System.Linq;
 namespace Game
 {
 	public class Game
-	{
-
-		public LevelBuilder LevelBuilder { get; private set; }
+	{	
+        public static LevelBuilder LevelBuilder { get; private set; }
 
 		public static List<IUpdateable> Updateables { get; private set; } = new List<IUpdateable>();
 
@@ -68,6 +67,5 @@ namespace Game
 
 		}
 
-
-	}
+    }
 }

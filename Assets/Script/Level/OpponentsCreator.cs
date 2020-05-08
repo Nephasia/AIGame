@@ -13,7 +13,9 @@ namespace Game
 		public List<Opponent> Opponents = new List<Opponent>();
 		public List<IGameObject> ObjectList => Opponents.ConvertAll(x => (IGameObject)x);
 
-		public OpponentsCreator()
+        public List<int> AliveOpponents = new List<int>();
+
+        public OpponentsCreator()
 		{
 			Instance = this;
 		}
@@ -30,6 +32,7 @@ namespace Game
 				{
 					Opponent opponent = new Opponent(spawnersPositions.Pop());
 					Opponents.Add(opponent);
+                    AliveOpponents.Add(opponent.Id);
 				}
 
 			}

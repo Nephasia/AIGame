@@ -19,7 +19,7 @@ namespace Game
 
 		void Update()
 		{
-			game.MakeIteration(100);
+			game.MakeIteration(1);
 
 			// todo : updates position and rotation of all enemies
 		}
@@ -27,18 +27,18 @@ namespace Game
 		void SetWholeLevel()
 		{
 			SetUpGround();
-			SetUp("Obstacles", game.LevelBuilder.ObstacleGenerator, "Materials/Gray");
-			SetUp("Spawners", game.LevelBuilder.SpawnerGenerator, "Materials/Purple");
+			SetUp("Obstacles", Game.LevelBuilder.ObstacleGenerator, "Materials/Gray");
+			SetUp("Spawners", Game.LevelBuilder.SpawnerGenerator, "Materials/Purple");
 
-			SetUpUpdateable("Enemy", game.LevelBuilder.OpponentsCreator, "Materials/Red", Vector3.one);
-			SetUpUpdateable("Bullet", game.LevelBuilder.BulletGenerator, "Materials/Yellow", Vector3.one * 0.4f);
+			SetUpUpdateable("Enemy", Game.LevelBuilder.OpponentsCreator, "Materials/Red", Vector3.one);
+			SetUpUpdateable("Bullet", Game.LevelBuilder.BulletGenerator, "Materials/Yellow", Vector3.one * 0.4f);
 		}
 
 		void SetUpGround()
 		{
 			GameObject go = GameObject.CreatePrimitive(PrimitiveType.Plane);
-			go.transform.localScale = new Vector3(game.LevelBuilder.Dimensions.x / 10, 1, game.LevelBuilder.Dimensions.y / 10);
-			go.transform.position = new Vector3(game.LevelBuilder.Dimensions.x / 2, 0, game.LevelBuilder.Dimensions.y / 2);
+			go.transform.localScale = new Vector3(Game.LevelBuilder.Dimensions.x / 10, 1, Game.LevelBuilder.Dimensions.y / 10);
+			go.transform.position = new Vector3(Game.LevelBuilder.Dimensions.x / 2, 0, Game.LevelBuilder.Dimensions.y / 2);
 		}
 
 		void SetUp(string name, IObjectList objectList, string materialName)

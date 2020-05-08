@@ -55,12 +55,16 @@ namespace Game
 
 		private void MoveForward()
 		{
-			GameObject.transform.Translate(Vector3.forward * ForwardSpeed * Game.IterationTime);
+            if (CanMove(Vector3.forward)) {
+                GameObject.transform.Translate(Vector3.forward * ForwardSpeed * Game.IterationTime);
+            }
 		}
 
 		private void MoveBackward()
 		{
-			GameObject.transform.Translate(-Vector3.forward * BackwardSpeed * Game.IterationTime);
+            if (CanMove(Vector3.back)) {
+                GameObject.transform.Translate(-Vector3.forward * BackwardSpeed * Game.IterationTime);
+            }
 		}
 
 		private void RotateLeft()
@@ -73,5 +77,37 @@ namespace Game
 			GameObject.transform.Rotate(Vector3.up, AngularSpeed * Game.IterationTime);
 		}
 
-	}
+        public bool CanMove(Vector3 direction)
+        {
+            RaycastHit hit;
+
+            float length = 0.3f;
+
+            if (Physics.Raycast(
+                GameObject.transform.position, GameObject.transform.TransformDirection(direction),
+                out hit, length)
+            )
+            {
+                switch (hit.collider.gameObject.name.Substring(0, hit.collider.gameObject.name.IndexOf("_")))
+                {
+                    case "Game.Opponent":
+                        if(GameObject.name.Substring(0, hit.collider.gameObject.name.IndexOf("_")) == "Game.Opponent") {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    case "Game.Obstacle":
+                        return false;
+                    case "Game.Bullet":
+                        return true;
+                    case "Game.Spawner":
+                        return true;
+                    default:
+                        break;
+                }
+            }
+            return true;
+        }
+
+    }
 }
