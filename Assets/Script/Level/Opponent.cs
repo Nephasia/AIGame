@@ -78,16 +78,27 @@ namespace Game
         public Opponent(Vector3 position, NeuralNetwork neuralNetwork)
         {
             Game.RegisterUpdateable(this);
-            Id = OponentsCreated++;
+			Id = OponentsCreated++;
 
-            GameObject = new GameObject();
-            GameObject.name = this.ToString() + "_" + Id;
-            GameObject.transform.position = position;
+			GameObject = new GameObject();
+			GameObject.name = this.ToString() + "_" + Id;
+			GameObject.transform.position = position;
+            GameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+            LastPosition = Position;
+            LastRotation = GameObject.transform.rotation;
 
             int tableSize = ((int)((VisionAngle / 2) / VisionResolution)) * 2 + 1;
-            VisionTable = new int[tableSize];
-            movement = new Movement(GameObject, ForwardSpeed, BackwardSpeed, AngularSpeed);
+			VisionTable = new int[tableSize];
+
+			movement = new Movement(GameObject, ForwardSpeed, BackwardSpeed, AngularSpeed);
+
+            weapon = new Weapon();
+
+            Statistics = new Statistics(movement);
+
             n = neuralNetwork;
+
+            
 
         }
 
