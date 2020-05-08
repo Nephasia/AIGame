@@ -86,7 +86,6 @@ namespace Game
 
             int tableSize = ((int)((VisionAngle / 2) / VisionResolution)) * 2 + 1;
             VisionTable = new int[tableSize];
-            ShootTimeCD = shootTime;
             movement = new Movement(GameObject, ForwardSpeed, BackwardSpeed, AngularSpeed);
             n = neuralNetwork;
 

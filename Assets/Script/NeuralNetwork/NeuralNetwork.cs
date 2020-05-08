@@ -138,9 +138,10 @@ namespace AI
             InitRandomWeights();
         }
 
-        public NeuralNetwork MakeChild()
+        public NeuralNetwork MakeChild(NeuralNetwork n)
         {
             NeuralNetwork child = new NeuralNetwork();
+            InitialiseNetwork();
 
 
             for (int k = 0; k < weights.Count; k++)
@@ -149,11 +150,12 @@ namespace AI
                 {
                     for (int j = 0; j < weights[k].ColumnCount; j++)
                     {
-                        float los = (float)(RandomNumber.Instance.RandNumber * 2.0f - 1.0f);
+                        float los = (float)Math.Max(0f, Math.Min(1f, (n.weights[k][i, j] + RandomNumber.Instance.RandNumber * 0.01f * 2.0f - 1.0f)));
                         weights[k][i, j] = los;
                     }
                 }
             }
+            return child;
         }
     }
 
