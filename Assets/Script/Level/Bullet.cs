@@ -63,29 +63,35 @@ namespace Game
                     Destroy();
                 }
 
-                RaycastHit hit;
-
-                float length = 0.3f;
-
-                if (Physics.Raycast(
-                    GameObject.transform.position, GameObject.transform.TransformDirection(Vector3.forward),
-                    out hit, length)
-                )
-                {
-                    if (hit.collider.gameObject.name.Substring(0, hit.collider.gameObject.name.IndexOf("_")) == "Game.Opponent")
-                    {
-                       
-
-                        Opponent o = OpponentsCreator.Instance.Opponents.Select(x => x)
-                            .Where(x => x.GameObject.name == hit.collider.gameObject.name).First();
-
-                        o.DealDamage(Damage);
-                    }
-
-                }
-
+                CheckCollision();
             }
+        }
 
+        private void CheckCollision()
+        {
+            RaycastHit hit;
+
+            float length = 0.3f;
+
+            if (Physics.Raycast(
+                GameObject.transform.position, GameObject.transform.TransformDirection(Vector3.forward),
+                out hit, length)
+            )
+            {
+                if (hit.collider.gameObject.name.Substring(0, hit.collider.gameObject.name.IndexOf("_")) == "Game.Opponent")
+                {
+                    CollisionWithOpponent(hit.collider.gameObject.name);   
+                }
+                Destroy();
+            }
+        }
+
+        private void CollisionWithOpponent(string nameOfHittedObject)
+        {
+            Opponent o = OpponentsCreator.Instance.Opponents.Select(x => x)
+                        .Where(x => x.GameObject.name == nameOfHittedObject).First();
+
+            o.DealDamage(Damage);
         }
 
         public void Destroy()
