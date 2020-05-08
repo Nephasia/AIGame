@@ -45,8 +45,9 @@ namespace Game
 		const float BackwardSpeed = 10; // was initially 6
 		const float AngularSpeed = 60;
 		Movement movement;
+        NeuralNetwork n;
 
-		public bool CanMove { get; set; } = true;
+        public bool CanMove { get; set; } = true;
 
 		public Opponent(Vector3 position)
 		{
@@ -64,10 +65,26 @@ namespace Game
 
 		}
 
-		public void Update()
+        public Opponent(Vector3 position, NeuralNetwork neuralNetwork)
+        {
+            Game.RegisterUpdateable(this);
+            Id = OponentsCreated++;
+
+            GameObject = new GameObject();
+            GameObject.name = this.ToString() + "_" + Id;
+            GameObject.transform.position = position;
+
+            int tableSize = ((int)((VisionAngle / 2) / VisionResolution)) * 2 + 1;
+            VisionTable = new int[tableSize];
+            ShootTimeCD = shootTime;
+            movement = new Movement(GameObject, ForwardSpeed, BackwardSpeed, AngularSpeed);
+            n = neuralNetwork;
+
+        }
+
+        public void Update()
 		{
 
-			NeuralNetwork n = new NeuralNetwork(1,10);
 			NeuralNetworkVariable n1, n2, n3;
 			(n1, n2, n3) = n.Learn(0,0,0);
 			int nn1, nn2, nn3;

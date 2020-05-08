@@ -31,7 +31,18 @@ namespace Game
 
 		}
 
-		public void MakeIteration(int iterations = 1)
+        public void CreateGame(List<AI.NeuralNetwork> neuralNetworks)
+        {
+
+            LevelBuilder = new LevelBuilder();
+            LevelBuilder.BuildLevel();
+
+            LevelBuilder.CreateEnemies(neuralNetworks);
+            LevelBuilder.CreateBullets();
+
+        }
+
+        public void MakeIteration(int iterations = 1)
 		{
 			for (int i = 0; i < iterations; i++)
 			{

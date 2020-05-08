@@ -36,7 +36,12 @@ namespace Game
 			OpponentsCreator.CreateOpponents(20, SpawnerGenerator);
 		}
 
-		public void CreateBullets()
+        public void CreateEnemies(List<AI.NeuralNetwork> neuralNetworks)
+        {
+            OpponentsCreator.CreateOpponents(20, SpawnerGenerator, neuralNetworks);
+        }
+
+        public void CreateBullets()
 		{
 			BulletGenerator.CreateBullets(1000);
 		}

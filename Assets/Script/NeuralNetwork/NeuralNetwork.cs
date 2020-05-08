@@ -5,7 +5,7 @@ using MathNet.Numerics.LinearAlgebra;
 
 namespace AI
 {
-    class NeuralNetwork
+    public class NeuralNetwork
     {
         int hiddenLayerCount;
         int neuronCount;
@@ -80,11 +80,24 @@ namespace AI
             }
         }
 
+        public void MutateWeights()
+        {
+            for (int k = 0; k < weights.Count; k++)
+            {
+                for (int i = 0; i < weights[k].RowCount; i++)
+                {
+                    for (int j = 0; j < weights[k].ColumnCount; j++)
+                    {
+                        float los = (float)(RandomNumber.Instance.RandNumber * 2.0f - 1.0f);
+                        weights[k][i, j] = los;
+                    }
+                }
+            }
+        }
+
         public (NeuralNetworkVariable, NeuralNetworkVariable, NeuralNetworkVariable) Learn(float inp1, float inp2, float inp3)
         {
-            InitialiseNetwork();
-            InitRandomWeights();
-
+            
             inputLayer[0, 0] = inp1;
             inputLayer[0, 1] = inp2;
             inputLayer[0, 2] = inp3;
@@ -117,6 +130,30 @@ namespace AI
         public float Sigmoid(double x)
         {
             return (float)(1 / (1 + Math.Exp(-x)));
+        }
+
+        public NeuralNetwork()
+        {
+            InitialiseNetwork();
+            InitRandomWeights();
+        }
+
+        public NeuralNetwork MakeChild()
+        {
+            NeuralNetwork child = new NeuralNetwork();
+
+
+            for (int k = 0; k < weights.Count; k++)
+            {
+                for (int i = 0; i < weights[k].RowCount; i++)
+                {
+                    for (int j = 0; j < weights[k].ColumnCount; j++)
+                    {
+                        float los = (float)(RandomNumber.Instance.RandNumber * 2.0f - 1.0f);
+                        weights[k][i, j] = los;
+                    }
+                }
+            }
         }
     }
 
