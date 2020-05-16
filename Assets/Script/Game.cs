@@ -22,6 +22,8 @@ namespace Game
 		public void CreateGame()
 		{
 
+			if(Updateables.Count > 0) Updateables.Clear();
+
 			LevelBuilder = new LevelBuilder();
 			LevelBuilder.BuildLevel();
 

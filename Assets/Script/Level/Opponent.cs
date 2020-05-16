@@ -23,18 +23,20 @@ namespace Game
         public Vector3 LastPosition { get; private set; }
 		public Quaternion LastRotation { get; private set; }
 
-        public Statistics Statistics { get; set; }
+        public Senses Senses { get; set; }
 
 		static int OponentsCreated = 0;
 
 		public int Id { get; private set; }
 
-        Weapon weapon; //TODO: ilość wystrzelonych pocisków
+        public Weapon Weapon { get; private set; }
 
-		int LifePoints { get; set; } = 100;
+		public int LifePoints { get; private set; } = 100;
 
-        //TODO: punktowanie za zabicie i trafienie
-		int KillCount { get; set; } = 0;
+		public int HitCount { get; private set; } = 0;
+
+		public int KillCount { get; private set; } = 0;
+
 
         //TODO: co to ma być???
 		int Score { get; set; } = 0;
@@ -70,9 +72,9 @@ namespace Game
 
 			movement = new Movement(GameObject, ForwardSpeed, BackwardSpeed, AngularSpeed);
 
-            weapon = new Weapon();
+            Weapon = new Weapon();
 
-            Statistics = new Statistics(movement);
+            Senses = new Senses(movement);
 		}
 
         public Opponent(Vector3 position, NeuralNetwork neuralNetwork)
@@ -104,7 +106,7 @@ namespace Game
 
         public void Update()
 		{
-            weapon.Reload();
+            Weapon.Reload();
             RefreshStatistics();
 
             NeuralNetwork n = new NeuralNetwork(1,10);
@@ -123,15 +125,15 @@ namespace Game
 
                 if (inputs.ShootState == Inputs.ShootEnum.Shoot)
                 {
-                    weapon.Shoot(GameObject);
+                    Weapon.Shoot(GameObject, Id);
                 }
             }
         }
 
         private void RefreshStatistics()
         {
-            Statistics.Distance += (Position - LastPosition).magnitude;
-            Statistics.IsMoving(Position, LastPosition);
+            Senses.Distance += (Position - LastPosition).magnitude;
+            Senses.IsMoving(Position, LastPosition);
         }
 
 		private Inputs SimpleAI()
@@ -187,6 +189,14 @@ namespace Game
 			{
 				Die();
 			}
+		}
+
+		public void AddHitCount(){ 
+			HitCount++;	
+		}
+
+		public void AddKillCount(){ 
+			KillCount++;	
 		}
 
 	}
