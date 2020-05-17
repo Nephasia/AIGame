@@ -134,14 +134,21 @@ namespace AI
 
         public NeuralNetwork()
         {
+            this.hiddenLayerCount = 3;
+            this.neuronCount = 30;
+
             InitialiseNetwork();
             InitRandomWeights();
         }
 
-        public NeuralNetwork MakeChild(NeuralNetwork n)
+        public NeuralNetwork MakeChild()
         {
             NeuralNetwork child = new NeuralNetwork();
-            InitialiseNetwork();
+
+            child.hiddenLayerCount = this.hiddenLayerCount;
+            child.neuronCount = this.neuronCount;
+
+            child.InitialiseNetwork();
 
 
             for (int k = 0; k < weights.Count; k++)
@@ -150,8 +157,8 @@ namespace AI
                 {
                     for (int j = 0; j < weights[k].ColumnCount; j++)
                     {
-                        float los = (float)Math.Max(0f, Math.Min(1f, (n.weights[k][i, j] + RandomNumber.Instance.RandNumber * 0.01f * 2.0f - 1.0f)));
-                        weights[k][i, j] = los;
+                        float los = (float)Math.Max(0f, Math.Min(1f, (weights[k][i, j] + RandomNumber.Instance.RandNumber * 0.01f * 2.0f - 1.0f)));
+                        child.weights[k][i, j] = los;
                     }
                 }
             }

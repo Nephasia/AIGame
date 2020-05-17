@@ -53,11 +53,12 @@ namespace Game
             {
 
                 Stack<Vector3> spawnersPositions = new Stack<Vector3>(spawnerGenerator.Spawners.Select(x => x.Position));
-
+                Debug.Log(Opponents.Count);
                 for (int i = 0; i < amount; i++)
                 {
                     Opponent opponent = new Opponent(spawnersPositions.Pop(), neuralNetworks[i]);
                     Opponents.Add(opponent);
+                    AliveOpponents.Add(opponent.Id);
                 }
 
             }

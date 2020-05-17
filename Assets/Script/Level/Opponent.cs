@@ -37,9 +37,17 @@ namespace Game
 
 		public int KillCount { get; private set; } = 0;
 
+        public int Score
+        {
+            get
+            {
+                return HitCount * 100 + KillCount * 300 - (int)Senses.Distance;
+            }
+        }
+
 
         //TODO: co to ma być???
-		int Score { get; set; } = 0;
+		//int Score { get; set; } = 0;
 
 		int[] VisionTable { get; set; }         // todo: powinna być oddzielna klasa - tablica pozycji
 
@@ -51,7 +59,7 @@ namespace Game
 		const float BackwardSpeed = 10; // was initially 6
 		const float AngularSpeed = 60;
 		Movement movement;
-        NeuralNetwork n;
+        public NeuralNetwork NeuralNetwork;
 
 		public bool IsAlive { get; set; } = true;
 
@@ -75,30 +83,34 @@ namespace Game
             Weapon = new Weapon();
 
             Senses = new Senses(movement);
+
+            NeuralNetwork = new NeuralNetwork();
+
+
 		}
 
         public Opponent(Vector3 position, NeuralNetwork neuralNetwork)
         {
             Game.RegisterUpdateable(this);
-			Id = OponentsCreated++;
+            Id = OponentsCreated++;
 
-			GameObject = new GameObject();
-			GameObject.name = this.ToString() + "_" + Id;
-			GameObject.transform.position = position;
+            GameObject = new GameObject();
+            GameObject.name = this.ToString() + "_" + Id;
+            GameObject.transform.position = position;
             GameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
             LastPosition = Position;
             LastRotation = GameObject.transform.rotation;
 
             int tableSize = ((int)((VisionAngle / 2) / VisionResolution)) * 2 + 1;
-			VisionTable = new int[tableSize];
+            VisionTable = new int[tableSize];
 
-			movement = new Movement(GameObject, ForwardSpeed, BackwardSpeed, AngularSpeed);
+            movement = new Movement(GameObject, ForwardSpeed, BackwardSpeed, AngularSpeed);
 
-            weapon = new Weapon();
+            Weapon = new Weapon();
 
-            Statistics = new Statistics(movement);
+            Senses = new Senses(movement);
 
-            n = neuralNetwork;
+            this.NeuralNetwork = neuralNetwork;
 
             
 
@@ -109,14 +121,15 @@ namespace Game
             Weapon.Reload();
             RefreshStatistics();
 
-            NeuralNetwork n = new NeuralNetwork(1,10);
+            //NeuralNetwork n = new NeuralNetwork(1,10);
 			NeuralNetworkVariable n1, n2, n3;
-			(n1, n2, n3) = n.Learn(0,0,0);
+			(n1, n2, n3) = NeuralNetwork.Learn(0,0,0);
 			int nn1, nn2, nn3;
 			(nn1, nn2, nn3) = InputAdapter.ConvertToInput(n1, n2, n3);
-            Inputs inputs = SimpleAI();//new Inputs(nn1,nn2,nn3);
+            //Inputs inputs = SimpleAI();
+            Inputs inputs = new Inputs(nn1, nn2, nn3);
 
-			LastPosition = Position;
+            LastPosition = Position;
 			LastRotation = GameObject.transform.rotation;
 
             if (IsAlive) {
@@ -184,10 +197,12 @@ namespace Game
 
 		public void DealDamage(int damage)
 		{
-			LifePoints -= damage;
-			if (LifePoints < 0)
+            
+            LifePoints -= damage;
+			if (LifePoints <= 0)
 			{
 				Die();
+                Debug.Log(Id + " Died");
 			}
 		}
 
