@@ -31,15 +31,13 @@ namespace Game
             return (current - last).magnitude > 0;
         }
 
-        //TODO: delta rotation - czy się obracamy; w którą strone: lewo, wcale, prawo; delta; 
+        //TODO: Ilu przeciwników widzimy
         //TODO: ile stopnii do przeciwnika do którego brakuje najmniej stopnii w obrocie
         //TODO: ile stopnii do przeciwnika najbliżej nas
-        //TODO: Ilu przeciwników widzimy
-        //TODO: Czy przeciwnik jest obrócony wprost na nas
         //TODO: Czy pocisk leci na nas(widząc go w obrębie kąta widzenia)
-        //TODO:Czy jest przeszkoda na linii strzału
-        //TODO:Czy jest przeciwnik na linii strzału
 
+        //TODO: delta rotation - czy się obracamy; w którą strone: lewo, wcale, prawo; delta; 
+        //TODO: Czy przeciwnik jest obrócony wprost na nas
 
     }
 }

@@ -45,10 +45,6 @@ namespace Game
             }
         }
 
-
-        //TODO: co to ma być???
-		//int Score { get; set; } = 0;
-
 		int[] VisionTable { get; set; }         // todo: powinna być oddzielna klasa - tablica pozycji
 
 		const float VisionAngle = 120;      // in degrees
