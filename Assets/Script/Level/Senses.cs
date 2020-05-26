@@ -31,12 +31,28 @@ namespace Game
             return (current - last).magnitude > 0;
         }
 
+        public float DeltaRotation(Quaternion current, Quaternion last)
+        {
+            return current.eulerAngles.y - last.eulerAngles.y;
+        }
+
+        public Inputs.RotationEnum IsRotating(Quaternion current, Quaternion last) 
+        {
+            int precision = 1;
+            if(DeltaRotation(current, last) >= precision) {
+                return Inputs.RotationEnum.Right;
+            } else if(DeltaRotation(current, last) <= precision) {
+                return Inputs.RotationEnum.Left;
+            } else {
+                return Inputs.RotationEnum.None;
+            }
+        }
+
         //TODO: Ilu przeciwników widzimy
         //TODO: ile stopnii do przeciwnika do którego brakuje najmniej stopnii w obrocie
         //TODO: ile stopnii do przeciwnika najbliżej nas
         //TODO: Czy pocisk leci na nas(widząc go w obrębie kąta widzenia)
 
-        //TODO: delta rotation - czy się obracamy; w którą strone: lewo, wcale, prawo; delta; 
         //TODO: Czy przeciwnik jest obrócony wprost na nas
 
     }

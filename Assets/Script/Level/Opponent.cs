@@ -143,6 +143,8 @@ namespace Game
         {
             Senses.Distance += (Position - LastPosition).magnitude;
             Senses.IsMoving(Position, LastPosition);
+            Senses.DeltaRotation(GameObject.transform.rotation, LastRotation);
+            Senses.IsRotating(GameObject.transform.rotation, LastRotation);
         }
 
 		private Inputs SimpleAI()
