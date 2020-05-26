@@ -12,7 +12,7 @@ namespace Game
 
 		bool isGameCreated = false;
 
-		float gameTime = 3;//2 * 60;
+		float gameTime = 60;//2 * 60;
 		float gameTimeCD;
 
 		uint iterationSpeed = 1;
