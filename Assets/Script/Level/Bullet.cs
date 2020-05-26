@@ -24,7 +24,7 @@ namespace Game
 
         int Id { get; set; }
         int OpponentId { get; set; }
-        int Damage { get; set; } = 50;
+        int Damage { get; set; } = 100;
         float LifeTimeCD { get; set; }
         float CurrentSpeed { get; set; }
 
@@ -80,7 +80,7 @@ namespace Game
             {
                 if (hit.collider.gameObject.name.Substring(0, hit.collider.gameObject.name.IndexOf("_")) == "Game.Opponent")
                 {
-                    CollisionWithOpponent(hit.collider.gameObject.name);   
+                    CollisionWithOpponent(hit.collider.gameObject.name);
                 }
                 Destroy();
             }
@@ -97,8 +97,9 @@ namespace Game
                         .Where(x => x.Id == OpponentId).First();
 
             killer.AddHitCount();
-
+            
             if(!o.IsAlive) killer.AddKillCount();
+            
         }
 
         public void Destroy()

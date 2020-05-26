@@ -46,7 +46,32 @@ namespace Game
 			}
 		}
 
-		private bool CheckIfEnoughSpawners(int amount, SpawnerGenerator spawnerGenerator)
+        public void CreateOpponents(int amount, SpawnerGenerator spawnerGenerator, List<AI.NeuralNetwork> neuralNetworks)
+        {
+
+            if (CheckIfEnoughSpawners(amount, spawnerGenerator))
+            {
+
+                Stack<Vector3> spawnersPositions = new Stack<Vector3>(spawnerGenerator.Spawners.Select(x => x.Position));
+                Debug.Log(Opponents.Count);
+                for (int i = 0; i < amount; i++)
+                {
+                    Opponent opponent = new Opponent(spawnersPositions.Pop(), neuralNetworks[i]);
+                    Opponents.Add(opponent);
+                    AliveOpponents.Add(opponent.Id);
+                }
+
+            }
+            else
+            {
+                throw new System.Exception(
+                    "Not enought spawners for enemies !\n" +
+                    "You have " + spawnerGenerator.SpawnersAmount + " spawners only."
+                );
+            }
+        }
+
+        private bool CheckIfEnoughSpawners(int amount, SpawnerGenerator spawnerGenerator)
 		{
 			return amount <= spawnerGenerator.SpawnersAmount;
 		}

@@ -32,7 +32,20 @@ namespace Game
 
 		}
 
-		public void MakeIteration(int iterations = 1)
+        public void CreateGame(List<AI.NeuralNetwork> neuralNetworks)
+        {
+
+            if (Updateables.Count > 0) Updateables.Clear();
+
+            LevelBuilder = new LevelBuilder();
+            LevelBuilder.BuildLevel();
+
+            LevelBuilder.CreateEnemies(neuralNetworks);
+            LevelBuilder.CreateBullets();
+
+        }
+
+        public void MakeIteration(int iterations = 1)
 		{
 			for (int i = 0; i < iterations; i++)
 			{
@@ -48,6 +61,25 @@ namespace Game
 			}
 		}
 
+        public List<AI.NeuralNetwork> ExportNeuralNetworks()
+        {
+            List <Opponent> opponents = new List<Opponent>();
+            List<AI.NeuralNetwork> neuralNetworks = new List<AI.NeuralNetwork>();
+
+            foreach (Opponent opponent in LevelBuilder.OpponentsCreator.Opponents)
+            {
+                opponents.Add(opponent);
+            }
+
+            opponents = opponents.OrderByDescending(x => x.Score).ToList();
+
+            foreach (Opponent opponent in opponents)
+            {
+                neuralNetworks.Add(opponent.NeuralNetwork);
+            }
+            return neuralNetworks;
+        }
+
 		public static void RegisterUpdateable(IUpdateable updateable)
 		{
 
@@ -57,6 +89,7 @@ namespace Game
 			}
 
 		}
+
 
     }
 }

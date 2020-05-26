@@ -8,6 +8,7 @@ namespace Game
 	{
 
 		Game game;
+        List<AI.NeuralNetwork> neuralNetworks;
 
 		bool isGameCreated = false;
 
@@ -15,15 +16,23 @@ namespace Game
 		float gameTimeCD;
 
 		uint iterationSpeed = 1;
+        
 
 		void Update()
 		{
 
 			if (!isGameCreated) {
 
+                 
 				game = new Game();
-				game.CreateGame();
-
+                if (neuralNetworks == null)
+                {
+                    game.CreateGame();
+                }
+                else
+                {
+                    game.CreateGame(neuralNetworks);
+                }
 				SetWholeLevel();
 				
 				isGameCreated = true;
@@ -34,6 +43,8 @@ namespace Game
 				// todo: the same when only one opponent left
 				if(gameTimeCD <= 0) {
 					isGameCreated = false;
+                    neuralNetworks = game.ExportNeuralNetworks();
+                    neuralNetworks.NextGeneration();
 					RemoveWholeLevel();
 				} else {
 					game.MakeIteration((int)iterationSpeed);
@@ -62,7 +73,6 @@ namespace Game
 			Destroy(GameObject.Find("SpawnersContainer"));
 			Destroy(GameObject.Find("EnemyContainer"));
 			Destroy(GameObject.Find("BulletContainer"));
-			
 		}
 
 		void SetUpGround()
