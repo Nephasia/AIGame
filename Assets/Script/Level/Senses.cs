@@ -36,15 +36,15 @@ namespace Game
             return current.eulerAngles.y - last.eulerAngles.y;
         }
 
-        public Rotation IsRotating(Quaternion current, Quaternion last) 
+        public Inputs.RotationEnum IsRotating(Quaternion current, Quaternion last) 
         {
             int precision = 1;
             if(DeltaRotation(current, last) >= precision) {
-                return Rotation.Right;
+                return Inputs.RotationEnum.Right;
             } else if(DeltaRotation(current, last) <= precision) {
-                return Rotation.Left;
+                return Inputs.RotationEnum.Left;
             } else {
-                return Rotation.None;
+                return Inputs.RotationEnum.None;
             }
         }
 
