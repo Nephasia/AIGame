@@ -48,12 +48,21 @@ namespace Game
             }
         }
 
+        //TODO: przemyśleć jak wykorzystać
+        public bool IsVisibleByEnemy(Opponent current, Opponent opponent)
+        {
+            Vector3 directionFromOpponentToCurrent = (current.Position - opponent.Position).normalized;
+            float dotProd = Vector3.Dot(directionFromOpponentToCurrent, opponent.GameObject.transform.forward);
+            //mostly forward
+            if (dotProd > 0.9) {
+                return true;
+            }
+            return false;
+        }
+
         //TODO: Ilu przeciwników widzimy
         //TODO: ile stopnii do przeciwnika do którego brakuje najmniej stopnii w obrocie
         //TODO: ile stopnii do przeciwnika najbliżej nas
         //TODO: Czy pocisk leci na nas(widząc go w obrębie kąta widzenia)
-
-        //TODO: Czy przeciwnik jest obrócony wprost na nas
-
     }
 }
