@@ -5,6 +5,7 @@ using MathNet.Numerics.LinearAlgebra;
 
 namespace AI
 {
+    [Serializable]
     public class NeuralNetwork
     {
         int hiddenLayerCount;

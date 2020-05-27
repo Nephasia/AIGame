@@ -16,8 +16,15 @@ namespace Game
 		float gameTimeCD;
 
 		uint iterationSpeed = 1;
-        
 
+        void Start()
+        {
+            if (neuralNetworks == null && NetworkSerializator.HasData())
+            {
+                NetworkSerializator.Load(neuralNetworks);
+            }
+        }
+            
 		void Update()
 		{
 
@@ -44,6 +51,7 @@ namespace Game
 				if(gameTimeCD <= 0) {
 					isGameCreated = false;
                     neuralNetworks = game.ExportNeuralNetworks();
+                    NetworkSerializator.Save(neuralNetworks);
                     neuralNetworks.NextGeneration();
 					RemoveWholeLevel();
 				} else {
