@@ -50,7 +50,7 @@ namespace Game
 		const float BackwardSpeed = 10; // was initially 6
 		const float AngularSpeed = 60;
 		Movement movement;
-        public NeuralNetwork NeuralNetwork;
+        public NeuralNetwork NeuralNetwork = new NeuralNetwork();
 
 		public bool IsAlive { get; set; } = true;
 
@@ -71,36 +71,13 @@ namespace Game
             visionTable = new VisionTable();
 
 			movement = new Movement(GameObject, ForwardSpeed, BackwardSpeed, AngularSpeed);
-
             Weapon = new Weapon();
-
             Senses = new Senses(movement);
-
-            NeuralNetwork = new NeuralNetwork();
-
-
 		}
 
-        public Opponent(Vector3 position, NeuralNetwork neuralNetwork)
+        public Opponent(Vector3 position, NeuralNetwork neuralNetwork) : this(position)
         {
-            Game.RegisterUpdateable(this);
-            Id = OponentsCreated++;
-
-            GameObject = new GameObject();
-            GameObject.name = this.ToString() + "_" + Id;
-            GameObject.transform.position = position;
-            GameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
-            LastPosition = Position;
-            LastRotation = GameObject.transform.rotation;
-
-            movement = new Movement(GameObject, ForwardSpeed, BackwardSpeed, AngularSpeed);
-
-            Weapon = new Weapon();
-
-            Senses = new Senses(movement);
-
             this.NeuralNetwork = neuralNetwork;
-
         }
 
         public void Update()

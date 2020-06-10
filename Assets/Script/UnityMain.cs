@@ -15,7 +15,7 @@ namespace Game
 		float gameTime = 60;//2 * 60;
 		float gameTimeCD;
 
-		uint iterationSpeed = 1;
+		uint iterationSpeed = 10;
 
         void Start()
         {
