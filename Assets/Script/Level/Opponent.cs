@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using AI;
+using System.Linq;
 
 namespace Game
 {
@@ -45,12 +46,6 @@ namespace Game
             }
         }
 
-		int[] VisionTable { get; set; }         // todo: powinna być oddzielna klasa - tablica pozycji
-
-		const float VisionAngle = 120;      // in degrees
-		const float VisionResolution = 1;   // in degrees
-		const float VisionRange = 40;
-
 		const float ForwardSpeed = 10;
 		const float BackwardSpeed = 10; // was initially 6
 		const float AngularSpeed = 60;
@@ -58,6 +53,8 @@ namespace Game
         public NeuralNetwork NeuralNetwork;
 
 		public bool IsAlive { get; set; } = true;
+
+		VisionTable visionTable;
 
 		public Opponent(Vector3 position)
 		{
@@ -71,8 +68,7 @@ namespace Game
             LastPosition = Position;
             LastRotation = GameObject.transform.rotation;
 
-            int tableSize = ((int)((VisionAngle / 2) / VisionResolution)) * 2 + 1;
-			VisionTable = new int[tableSize];
+            visionTable = new VisionTable();
 
 			movement = new Movement(GameObject, ForwardSpeed, BackwardSpeed, AngularSpeed);
 
@@ -97,9 +93,6 @@ namespace Game
             LastPosition = Position;
             LastRotation = GameObject.transform.rotation;
 
-            int tableSize = ((int)((VisionAngle / 2) / VisionResolution)) * 2 + 1;
-            VisionTable = new int[tableSize];
-
             movement = new Movement(GameObject, ForwardSpeed, BackwardSpeed, AngularSpeed);
 
             Weapon = new Weapon();
@@ -108,14 +101,14 @@ namespace Game
 
             this.NeuralNetwork = neuralNetwork;
 
-            
-
         }
 
         public void Update()
 		{
             Weapon.Reload();
             RefreshStatistics();
+
+			visionTable.Update(GameObject.transform);
 
             //NeuralNetwork n = new NeuralNetwork(1,10);
 			NeuralNetworkVariable n1, n2, n3;
@@ -142,9 +135,12 @@ namespace Game
         private void RefreshStatistics()
         {
             Senses.Distance += (Position - LastPosition).magnitude;
-            Senses.IsMoving(Position, LastPosition);
-            Senses.DeltaRotation(GameObject.transform.rotation, LastRotation);
-            Senses.IsRotating(GameObject.transform.rotation, LastRotation);
+            Senses.IsMoving = Senses.CheckIsMoving(Position, LastPosition);
+            Senses.RotationSite = Senses.CheckIsRotating(GameObject.transform.rotation, LastRotation);
+			Senses.OponentsSeenAmount = (new List<VisionTable.SeenObjectType>(visionTable.Table)
+				.Where(x => x == VisionTable.SeenObjectType.Opponent)).Count();
+
+
         }
 
 		private Inputs SimpleAI()
