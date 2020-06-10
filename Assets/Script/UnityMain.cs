@@ -16,6 +16,7 @@ namespace Game
 		float gameTimeCD;
 
 		uint iterationSpeed = 1;
+		uint iterationsNumber = 1;
 
         void Start()
         {
@@ -23,6 +24,8 @@ namespace Game
             {
                 NetworkSerializator.Load(neuralNetworks);
             }
+
+			Debug.Log(PreferencesScript.iterNum);
         }
             
 		void Update()

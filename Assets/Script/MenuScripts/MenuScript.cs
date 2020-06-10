@@ -1,13 +1,68 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        Button[] mainMenuButtons = new Button[4];
+        Slider[] sliders = new Slider[2];
+
+        mainMenuButtons[0] = transform.Find("TrainButton").GetComponent<Button>();
+        mainMenuButtons[0].onClick.AddListener(delegate ()
+        {
+            SceneManager.LoadScene(2);
+            Debug.Log("clicked");
+        });
+
+
+
+
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            mainMenuButtons[2] = transform.Find("BackButton").GetComponent<Button>();
+            sliders[0] = transform.Find("IterationsSlider").GetComponent<Slider>();
+            Text iterationNumber = transform.Find("IterationNumber").GetComponent<Text>();
+
+            sliders[1] = transform.Find("IterationsSpeedSlider").GetComponent<Slider>();
+            Text iterationSpeedNumber = transform.Find("IterationSpeedNumber").GetComponent<Text>();
+
+
+            mainMenuButtons[2].onClick.AddListener(delegate ()
+            {
+                SceneManager.LoadScene(0);
+                Debug.Log("clicked");
+            });
+
+            sliders[0].onValueChanged.AddListener(delegate (float val)
+            {
+                iterationNumber.text = val.ToString();
+            });
+
+            sliders[1].onValueChanged.AddListener(delegate (float val)
+            {
+                iterationSpeedNumber.text = val.ToString();
+            });
+        }
+
+        
+       
+    }
+
+
+    public void MainMenu()
+    {
+
+    }
+
+    public void PreferencesMenu()
+    {
+
     }
 
     public void QuitGame()
