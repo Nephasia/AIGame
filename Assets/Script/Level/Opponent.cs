@@ -54,7 +54,7 @@ namespace Game
 
 		public bool IsAlive { get; set; } = true;
 
-		VisionTable visionTable;
+		public VisionTable visionTable;
 
 		public Opponent(Vector3 position)
 		{
