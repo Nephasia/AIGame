@@ -1,13 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        Button[] mainMenuButtons = new Button[4];
+        Slider[] sliders = new Slider[2];
+
+    
+
+
+
+
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+           
+        }
+
+        
+       
+    }
+
+
+    public void MainMenu()
+    {
+
+    }
+
+    public void PreferencesMenu()
+    {
+
     }
 
     public void QuitGame()
