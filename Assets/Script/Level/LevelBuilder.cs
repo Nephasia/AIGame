@@ -18,7 +18,7 @@ namespace Game
 
 		public LevelBuilder()
 		{
-			Dimensions = new Vector2(100, 100);
+			Dimensions = new Vector2(60, 60);
 			ObstacleGenerator = new ObstacleGenerator(Dimensions);
 			SpawnerGenerator = new SpawnerGenerator(Dimensions);
 			OpponentsCreator = new OpponentsCreator();
