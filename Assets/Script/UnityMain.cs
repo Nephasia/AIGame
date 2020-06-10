@@ -15,7 +15,7 @@ namespace Game
 		float gameTime = 60;//2 * 60;
 		float gameTimeCD;
 
-		uint iterationSpeed = 1;
+		uint iterationSpeed = uint.Parse(PreferencesScript.iterSpeed);
 		uint iterationsNumber = 1;
 
         void Start()
@@ -26,7 +26,7 @@ namespace Game
             }
 
 			Debug.Log(PreferencesScript.iterNum);
-        }
+		}
             
 		void Update()
 		{

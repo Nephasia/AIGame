@@ -7,7 +7,9 @@ using UnityEngine.UI;
 public class PreferencesScript : MonoBehaviour
 {
 
-    public static string iterNum;
+    public static string iterNum = "1";
+
+    public static string iterSpeed = "1";
 
 
     public void Start()
@@ -23,7 +25,7 @@ public class PreferencesScript : MonoBehaviour
         mainMenuButtons[0] = transform.Find("TrainButton").GetComponent<Button>();
         mainMenuButtons[0].onClick.AddListener(delegate ()
         {
-            SceneManager.LoadScene("TrainMenu");
+            SceneManager.LoadScene("Gameplay");
             Debug.Log("clicked");
         });
 
@@ -37,7 +39,7 @@ public class PreferencesScript : MonoBehaviour
 
         mainMenuButtons[2].onClick.AddListener(delegate ()
         {
-            SceneManager.LoadScene("Gameplay");
+            SceneManager.LoadScene("StartMenu");
             Debug.Log("clicked");
         });
 
@@ -50,6 +52,7 @@ public class PreferencesScript : MonoBehaviour
         sliders[1].onValueChanged.AddListener(delegate (float val)
         {
             iterationSpeedNumber.text = val.ToString();
+            iterSpeed = iterationSpeedNumber.text;
         });
     }
 }
