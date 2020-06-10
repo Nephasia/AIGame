@@ -6,8 +6,8 @@ public class VisionTable {
 
     public SeenObjectType[] Table { get; set; }
 
-	public const float VisionAngle = 120;      // in degrees
-	const int VisionResolution = 1;   // in degrees
+	public const float VisionAngle = 80;      // in degrees
+	const int VisionResolution = 2;   // in degrees
 	const float VisionRange = 40;
 
     public enum SeenObjectType : int {
@@ -25,7 +25,7 @@ public class VisionTable {
     public void Update(Transform currentTransform) {
      
         Table[0] = Look(currentTransform);
-        for (int i = VisionResolution; i <= VisionAngle; i+=VisionResolution) {
+        for (int i = 1; i < Table.Length; i++) {
 
             if(i % 2 == 0) {
                 Table[i] = Look(currentTransform, VisionResolution*((i+1)/2));
@@ -47,13 +47,13 @@ public class VisionTable {
             )
         )
         {
-            switch (hit.collider.gameObject.name.Substring(0, hit.collider.gameObject.name.IndexOf("_")))
+            switch (hit.collider.gameObject.name.Substring(4, 4+3))
             {
-                case "Game.Opponent":
+                case "Opp":
                     return SeenObjectType.Opponent;
-                case "Game.Obstacle":
+                case "Obs":
                     return SeenObjectType.Obstacle;
-                case "Game.Bullet":
+                case "Bul":
                     return SeenObjectType.Bullet;
                 default:
                     return SeenObjectType.None;
