@@ -7,14 +7,13 @@ public class VisionTable {
     public SeenObjectType[] Table { get; set; }
 
 	public const float VisionAngle = 80;      // in degrees
-	const int VisionResolution = 2;   // in degrees
-	const float VisionRange = 40;
+	const int VisionResolution = 3;   // in degrees
+	const float VisionRange = 30;
 
     public enum SeenObjectType : int {
 		None = 0,
 		Obstacle,
-		Opponent,
-		Bullet
+		Opponent
 	}
 
     public VisionTable() {
@@ -53,8 +52,6 @@ public class VisionTable {
                     return SeenObjectType.Opponent;
                 case "Obs":
                     return SeenObjectType.Obstacle;
-                case "Bul":
-                    return SeenObjectType.Bullet;
                 default:
                     return SeenObjectType.None;
             }

@@ -13,8 +13,8 @@ namespace Game
 		public Vector3 Position { get; set; }
 		public Vector3 Scale { get; set; }
 
-        int minSize = 5;
-		int maxSize = 15;
+        int minSize = 4;
+		int maxSize = 12;
 
 		int height = 2;
 
