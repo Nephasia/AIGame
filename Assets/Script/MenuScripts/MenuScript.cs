@@ -7,41 +7,42 @@ using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
+
+    public void Start()
+    {
+        StartGame();
+    }
+
     public void StartGame()
     {
 
         Button[] mainMenuButtons = new Button[4];
         Slider[] sliders = new Slider[2];
 
-    
-
-
-
-
-        if (SceneManager.GetActiveScene().buildIndex == 2)
+        mainMenuButtons[0] = transform.Find("StartGameButton").GetComponent<Button>();
+        mainMenuButtons[0].onClick.AddListener(delegate ()
         {
-           
-        }
+            SceneManager.LoadScene("Gameplay");
+            Debug.Log("clicked");
+        });
 
-        
-       
+
+        mainMenuButtons[1] = transform.Find("QuitButton").GetComponent<Button>();
+        mainMenuButtons[1].onClick.AddListener(delegate ()
+        {
+            Application.Quit();
+        });
+
+        mainMenuButtons[2] = transform.Find("TrainButton").GetComponent<Button>();
+        mainMenuButtons[2].onClick.AddListener(delegate ()
+        {
+            SceneManager.LoadScene("TrainMenu");
+            Debug.Log("clicked");
+        });
+
+
     }
 
-
-    public void MainMenu()
-    {
-
-    }
-
-    public void PreferencesMenu()
-    {
-
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
 }
 
 //public class MainMenu : MonoBehaviour {
