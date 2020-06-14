@@ -10,7 +10,6 @@ namespace Game
 	{
 
 		public GameObject GameObject { get; set; }
-        uint iterationsNumber = uint.Parse(PreferencesScript.iterNum);
         public Vector3 Position
 		{
 			get => GameObject.transform.position;

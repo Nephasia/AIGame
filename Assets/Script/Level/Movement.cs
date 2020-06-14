@@ -6,8 +6,6 @@ namespace Game
 {
 	public class Movement
 	{
-        uint iterationsNumber = uint.Parse(PreferencesScript.iterNum);
-
         GameObject GameObject;
 
 		float ForwardSpeed;
@@ -57,26 +55,25 @@ namespace Game
 		private void MoveForward()
 		{
             if (CanMove(Vector3.forward)) {
-                GameObject.transform.Translate(Vector3.forward * ForwardSpeed * Game.deltaTime * iterationsNumber);
-                Debug.Log("Movement: " + ForwardSpeed * Game.deltaTime);
+                GameObject.transform.Translate(Vector3.forward * ForwardSpeed * Game.deltaTime);
             }
 		}
 
 		private void MoveBackward()
 		{
             if (CanMove(Vector3.back)) {
-                GameObject.transform.Translate(-Vector3.forward * BackwardSpeed * Game.deltaTime * iterationsNumber);
+                GameObject.transform.Translate(-Vector3.forward * BackwardSpeed * Game.deltaTime);
             }
 		}
 
 		private void RotateLeft()
 		{
-			GameObject.transform.Rotate(Vector3.up, -AngularSpeed * Game.deltaTime * iterationsNumber);
+			GameObject.transform.Rotate(Vector3.up, -AngularSpeed * Game.deltaTime);
 		}
 
 		private void RotateRight()
 		{
-			GameObject.transform.Rotate(Vector3.up, AngularSpeed * Game.deltaTime * iterationsNumber);
+			GameObject.transform.Rotate(Vector3.up, AngularSpeed * Game.deltaTime);
 		}
 
         public bool CanMove(Vector3 direction)

@@ -9,7 +9,6 @@ namespace Game
     public class Bullet : IGameObject, IUpdateable
     {
         public GameObject GameObject { get; set; }
-        uint iterationsNumber = uint.Parse(PreferencesScript.iterNum);
         public Vector3 Position
         {
             get => GameObject.transform.position;
@@ -58,7 +57,7 @@ namespace Game
             if (active)
             {
                 movement.HandleMovementInput(Inputs.MovementEnum.Forward);
-                LifeTimeCD -= Game.deltaTime * iterationsNumber;
+                LifeTimeCD -= Game.deltaTime;
                 if (LifeTimeCD <= 0)
                 {
                     Destroy();

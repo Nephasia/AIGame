@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System.Diagnostics;
 
 namespace Game
 {
@@ -12,18 +11,11 @@ namespace Game
 
 		public static List<IUpdateable> Updateables { get; private set; } = new List<IUpdateable>();
 
-		static float iterationsPerSecond = 1;
         public static float deltaTime;
         public float lastTime;
-        Stopwatch watch;
-		public static float IterationTime { get; private set; }
 
 		public Game()
 		{
-            watch = new Stopwatch();
-            watch.Start();
-			IterationTime = uint.Parse(PreferencesScript.iterSpeed) / iterationsPerSecond;
-            lastTime = (float)watch.Elapsed.TotalSeconds;
         }
 
 		public void CreateGame()
@@ -56,12 +48,8 @@ namespace Game
 		{
 			for (int i = 0; i < iterations; i++)
 			{
-                if (i == 0) deltaTime = 0.01f;
-                else
-                {
-                    deltaTime = (float)watch.Elapsed.TotalSeconds - lastTime;
-                }
-                lastTime = (float)watch.Elapsed.TotalSeconds;
+				if (iterations == 1) deltaTime = Time.deltaTime;
+				else deltaTime = 1/60f;
 				IterateGame();
 			}
 		}
