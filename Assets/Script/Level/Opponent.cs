@@ -10,7 +10,7 @@ namespace Game
 	{
 
 		public GameObject GameObject { get; set; }
-		public Vector3 Position
+        public Vector3 Position
 		{
 			get => GameObject.transform.position;
 			set => GameObject.transform.position = value;
@@ -174,7 +174,7 @@ namespace Game
 			if (LifePoints <= 0)
 			{
 				Die();
-                Debug.Log(Id + " Died");
+                //Debug.Log(Id + " Died");
 			}
 		}
 

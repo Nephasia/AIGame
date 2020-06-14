@@ -13,8 +13,8 @@ namespace Game
 
 		bool isGameCreated = false;
 
-		float gameTime = 60;//2 * 60;
-		float gameTimeCD;
+		float gameIterations = 60*30;//2 * 60;
+		float gameIterationsCD;
 
 
 		uint iterationSpeed;
@@ -53,14 +53,14 @@ namespace Game
 				SetWholeLevel();
 				
 				isGameCreated = true;
-				gameTimeCD = gameTime;
+				gameIterationsCD = gameIterations;
                 iterationSpeed = uint.Parse(PreferencesScript.iterSpeed);
                 iterationsNumber = uint.Parse(PreferencesScript.iterNum);
 
 
             } else {
 				// todo: the same when only one opponent left
-				if(gameTimeCD <= 0) {
+				if(gameIterationsCD <= 0) {
                     isGameCreated = false;
                     neuralNetworks = game.ExportNeuralNetworks();
                     neuralNetworks.NextGeneration();
@@ -74,7 +74,7 @@ namespace Game
                     }
 				} else {
 					game.MakeIteration((int)iterationSpeed);
-					gameTimeCD -= Time.deltaTime * iterationSpeed;
+					gameIterationsCD -= 1 * iterationSpeed;
 				}
 
 			}

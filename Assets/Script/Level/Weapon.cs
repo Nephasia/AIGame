@@ -9,7 +9,8 @@ namespace Game
     {
         float ShootTimeCD { get; set; }
 
-        float shootTime = 5.0f;
+        float minShootTime = 0.4f;
+        float maxShootTime = 1.5f;
 
         bool canShoot;
 
@@ -17,16 +18,16 @@ namespace Game
 
         public Weapon()
         {
-            ShootTimeCD = shootTime;
+            ShootTimeCD = Random.Range(minShootTime, maxShootTime); 
         }
 
         public void Reload()
         {
-            ShootTimeCD -= Game.IterationTime;
+            ShootTimeCD -= Game.deltaTime;
             if (ShootTimeCD <= 0)
             {
                 canShoot = true;
-                ShootTimeCD = shootTime;
+                ShootTimeCD = Random.Range(minShootTime, maxShootTime);
             }
         }
 

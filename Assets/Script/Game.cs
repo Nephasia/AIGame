@@ -11,13 +11,12 @@ namespace Game
 
 		public static List<IUpdateable> Updateables { get; private set; } = new List<IUpdateable>();
 
-		static float iterationsPerSecond = 60;
-		public static float IterationTime { get; private set; }
+        public static float deltaTime;
+        public float lastTime;
 
 		public Game()
 		{
-			IterationTime = 1 / iterationsPerSecond;
-		}
+        }
 
 		public void CreateGame()
 		{
@@ -49,6 +48,8 @@ namespace Game
 		{
 			for (int i = 0; i < iterations; i++)
 			{
+				if (iterations == 1) deltaTime = Time.deltaTime;
+				else deltaTime = 1/60f;
 				IterateGame();
 			}
 		}
@@ -73,8 +74,8 @@ namespace Game
 
             opponents = opponents.OrderByDescending(x => x.Score).ToList();
 
-            Debug.Log("High Score: " + opponents[0].Score);
-            Debug.Log("Lowest Score: " + opponents[opponents.Count - 1].Score);
+            UnityEngine.Debug.Log("High Score: " + opponents[0].Score);
+            //UnityEngine.Debug.Log("Lowest Score: " + opponents[opponents.Count - 1].Score);
 
             foreach (Opponent opponent in opponents)
             {
