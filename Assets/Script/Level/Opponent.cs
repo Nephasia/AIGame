@@ -42,13 +42,18 @@ namespace Game
         {
             get
             {
-                return HitCount * 100 + KillCount * 300;
+				return
+					HitCount * 100 +
+					KillCount * 300 +
+					(int)(System.Math.Sqrt(Senses.Distance) * 0.1)
+					;
+
             }
         }
 
 		const float ForwardSpeed = 10;
 		const float BackwardSpeed = 10; // was initially 6
-		const float AngularSpeed = 60;
+		const float AngularSpeed = 90;
 		Movement movement;
         public NeuralNetwork NeuralNetwork = new NeuralNetwork();
 

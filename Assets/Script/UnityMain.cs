@@ -86,7 +86,7 @@ namespace Game
 		{
 			SetUpGround();
 			SetUp("Obstacles", Game.LevelBuilder.ObstacleGenerator, "Materials/Gray");
-			SetUp("Spawners", Game.LevelBuilder.SpawnerGenerator, "Materials/Purple");
+			//SetUp("Spawners", Game.LevelBuilder.SpawnerGenerator, "Materials/Purple");
 
 			SetUpUpdateable("Enemy", Game.LevelBuilder.OpponentsCreator, "Materials/Red", Vector3.one);
 			SetUpUpdateable("Bullet", Game.LevelBuilder.BulletGenerator, "Materials/Yellow", Vector3.one * 0.4f);
