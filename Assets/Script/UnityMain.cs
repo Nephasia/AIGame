@@ -74,6 +74,7 @@ namespace Game
                     }
 				} else {
 					game.MakeIteration((int)iterationSpeed);
+                    Debug.Log("Iteration Speed: " + iterationSpeed);
 					gameTimeCD -= Time.deltaTime * iterationSpeed;
 				}
 

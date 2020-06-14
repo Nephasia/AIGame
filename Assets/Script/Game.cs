@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Game
 {
@@ -11,13 +12,19 @@ namespace Game
 
 		public static List<IUpdateable> Updateables { get; private set; } = new List<IUpdateable>();
 
-		static float iterationsPerSecond = 60;
+		static float iterationsPerSecond = 1;
+        public static float deltaTime;
+        public float lastTime;
+        Stopwatch watch;
 		public static float IterationTime { get; private set; }
 
 		public Game()
 		{
-			IterationTime = 1 / iterationsPerSecond;
-		}
+            watch = new Stopwatch();
+            watch.Start();
+			IterationTime = uint.Parse(PreferencesScript.iterSpeed) / iterationsPerSecond;
+            lastTime = (float)watch.Elapsed.TotalSeconds;
+        }
 
 		public void CreateGame()
 		{
@@ -49,6 +56,12 @@ namespace Game
 		{
 			for (int i = 0; i < iterations; i++)
 			{
+                if (i == 0) deltaTime = 0.01f;
+                else
+                {
+                    deltaTime = (float)watch.Elapsed.TotalSeconds - lastTime;
+                }
+                lastTime = (float)watch.Elapsed.TotalSeconds;
 				IterateGame();
 			}
 		}
@@ -73,8 +86,8 @@ namespace Game
 
             opponents = opponents.OrderByDescending(x => x.Score).ToList();
 
-            Debug.Log("High Score: " + opponents[0].Score);
-            Debug.Log("Lowest Score: " + opponents[opponents.Count - 1].Score);
+            UnityEngine.Debug.Log("High Score: " + opponents[0].Score);
+            UnityEngine.Debug.Log("Lowest Score: " + opponents[opponents.Count - 1].Score);
 
             foreach (Opponent opponent in opponents)
             {

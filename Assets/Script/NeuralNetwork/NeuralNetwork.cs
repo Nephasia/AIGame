@@ -161,7 +161,7 @@ namespace AI
             }
 
             //make those values in range [-1,1]
-            inputLayer = inputLayer.PointwiseTanh();
+            //inputLayer = inputLayer.PointwiseTanh();
 
             //compute hidden layers values
             hiddenLayers[0] = (inputLayer * weights[0] + bias[0]).PointwiseTanh();
@@ -189,8 +189,8 @@ namespace AI
 
         public NeuralNetwork()
         {
-            this.hiddenLayerCount = 3;
-            this.neuronCount = 30;
+            this.hiddenLayerCount = 5;
+            this.neuronCount = 60;
             this.inputCount = 54;
             this.outputCount = 5;
 

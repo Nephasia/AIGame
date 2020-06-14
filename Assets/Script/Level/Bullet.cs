@@ -9,6 +9,7 @@ namespace Game
     public class Bullet : IGameObject, IUpdateable
     {
         public GameObject GameObject { get; set; }
+        uint iterationsNumber = uint.Parse(PreferencesScript.iterNum);
         public Vector3 Position
         {
             get => GameObject.transform.position;
@@ -29,7 +30,7 @@ namespace Game
         float CurrentSpeed { get; set; }
 
         const float lifeTime = 5;
-        const float speed = 20;
+        const float speed = 50;
         Movement movement;
         bool active = false;
 
@@ -57,7 +58,7 @@ namespace Game
             if (active)
             {
                 movement.HandleMovementInput(Inputs.MovementEnum.Forward);
-                LifeTimeCD -= Game.IterationTime;
+                LifeTimeCD -= Game.deltaTime * iterationsNumber;
                 if (LifeTimeCD <= 0)
                 {
                     Destroy();
@@ -71,7 +72,7 @@ namespace Game
         {
             RaycastHit hit;
 
-            float length = 0.3f;
+            float length = 1f;
 
             if (Physics.Raycast(
                 GameObject.transform.position, GameObject.transform.TransformDirection(Vector3.forward),

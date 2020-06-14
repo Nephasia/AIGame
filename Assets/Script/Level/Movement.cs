@@ -6,8 +6,9 @@ namespace Game
 {
 	public class Movement
 	{
+        uint iterationsNumber = uint.Parse(PreferencesScript.iterNum);
 
-		GameObject GameObject;
+        GameObject GameObject;
 
 		float ForwardSpeed;
 		float BackwardSpeed;
@@ -56,32 +57,33 @@ namespace Game
 		private void MoveForward()
 		{
             if (CanMove(Vector3.forward)) {
-                GameObject.transform.Translate(Vector3.forward * ForwardSpeed * Game.IterationTime);
+                GameObject.transform.Translate(Vector3.forward * ForwardSpeed * Game.deltaTime * iterationsNumber);
+                Debug.Log("Movement: " + ForwardSpeed * Game.deltaTime);
             }
 		}
 
 		private void MoveBackward()
 		{
             if (CanMove(Vector3.back)) {
-                GameObject.transform.Translate(-Vector3.forward * BackwardSpeed * Game.IterationTime);
+                GameObject.transform.Translate(-Vector3.forward * BackwardSpeed * Game.deltaTime * iterationsNumber);
             }
 		}
 
 		private void RotateLeft()
 		{
-			GameObject.transform.Rotate(Vector3.up, -AngularSpeed * Game.IterationTime);
+			GameObject.transform.Rotate(Vector3.up, -AngularSpeed * Game.deltaTime * iterationsNumber);
 		}
 
 		private void RotateRight()
 		{
-			GameObject.transform.Rotate(Vector3.up, AngularSpeed * Game.IterationTime);
+			GameObject.transform.Rotate(Vector3.up, AngularSpeed * Game.deltaTime * iterationsNumber);
 		}
 
         public bool CanMove(Vector3 direction)
         {
             RaycastHit hit;
-
-            float length = 0.3f;
+            
+            float length = 1f;
 
             if (Physics.Raycast(
                 GameObject.transform.position, GameObject.transform.TransformDirection(direction),

@@ -8,8 +8,11 @@ namespace Game
     public class Weapon
     {
         float ShootTimeCD { get; set; }
+        uint iterationsNumber = uint.Parse(PreferencesScript.iterNum);
 
-        float shootTime = 5.0f;
+        //float shootTime = 1.0f;
+        float minShootTime = 1.2f;
+        float maxShootTime = 3.0f;
 
         bool canShoot;
 
@@ -17,16 +20,16 @@ namespace Game
 
         public Weapon()
         {
-            ShootTimeCD = shootTime;
+            ShootTimeCD = Random.Range(minShootTime, maxShootTime); 
         }
 
         public void Reload()
         {
-            ShootTimeCD -= Game.IterationTime;
+            ShootTimeCD -= Game.deltaTime * iterationsNumber;
             if (ShootTimeCD <= 0)
             {
                 canShoot = true;
-                ShootTimeCD = shootTime;
+                ShootTimeCD = Random.Range(minShootTime, maxShootTime);
             }
         }
 
