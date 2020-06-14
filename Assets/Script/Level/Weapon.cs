@@ -9,9 +9,8 @@ namespace Game
     {
         float ShootTimeCD { get; set; }
 
-        //float shootTime = 1.0f;
-        float minShootTime = 1.2f;
-        float maxShootTime = 3.0f;
+        float minShootTime = 0.4f;
+        float maxShootTime = 1.5f;
 
         bool canShoot;
 

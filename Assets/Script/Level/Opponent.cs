@@ -174,7 +174,7 @@ namespace Game
 			if (LifePoints <= 0)
 			{
 				Die();
-                Debug.Log(Id + " Died");
+                //Debug.Log(Id + " Died");
 			}
 		}
 

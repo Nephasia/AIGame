@@ -75,7 +75,7 @@ namespace Game
             opponents = opponents.OrderByDescending(x => x.Score).ToList();
 
             UnityEngine.Debug.Log("High Score: " + opponents[0].Score);
-            UnityEngine.Debug.Log("Lowest Score: " + opponents[opponents.Count - 1].Score);
+            //UnityEngine.Debug.Log("Lowest Score: " + opponents[opponents.Count - 1].Score);
 
             foreach (Opponent opponent in opponents)
             {

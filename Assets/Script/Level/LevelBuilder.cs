@@ -7,6 +7,8 @@ namespace Game
 	public class LevelBuilder
 	{
 
+		int enemies = 15;
+
 		public Vector2 Dimensions { get; private set; }
 
 		public ObstacleGenerator ObstacleGenerator { get; private set; }
@@ -33,12 +35,12 @@ namespace Game
 
 		public void CreateEnemies()
 		{
-			OpponentsCreator.CreateOpponents(20, SpawnerGenerator);
+			OpponentsCreator.CreateOpponents(enemies, SpawnerGenerator);
 		}
 
         public void CreateEnemies(List<AI.NeuralNetwork> neuralNetworks)
         {
-            OpponentsCreator.CreateOpponents(20, SpawnerGenerator, neuralNetworks);
+            OpponentsCreator.CreateOpponents(enemies, SpawnerGenerator, neuralNetworks);
         }
 
         public void CreateBullets()
