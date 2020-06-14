@@ -73,6 +73,9 @@ namespace Game
 
             opponents = opponents.OrderByDescending(x => x.Score).ToList();
 
+            Debug.Log("High Score: " + opponents[0].Score);
+            Debug.Log("Lowest Score: " + opponents[opponents.Count - 1].Score);
+
             foreach (Opponent opponent in opponents)
             {
                 neuralNetworks.Add(opponent.NeuralNetwork);

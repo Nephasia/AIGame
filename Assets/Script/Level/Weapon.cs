@@ -9,7 +9,7 @@ namespace Game
     {
         float ShootTimeCD { get; set; }
 
-        float shootTime = 0.6f;
+        float shootTime = 5.0f;
 
         bool canShoot;
 

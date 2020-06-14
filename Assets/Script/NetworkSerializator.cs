@@ -26,15 +26,16 @@ namespace Game
 
             }
         }
-        public static void Load(object o)
+        public static List<AI.NeuralNetwork> Load()
         {
+            List<AI.NeuralNetwork> neuralNetworks = null;
             string path = "networks.dat";
             BinaryFormatter binaryFormatter = new BinaryFormatter();
             using (Stream stream = File.Open(path, FileMode.OpenOrCreate))
             {
                 try
                 {
-                    o = binaryFormatter.Deserialize(stream);
+                    neuralNetworks = binaryFormatter.Deserialize(stream) as List<AI.NeuralNetwork>;
                 }
                 catch (SerializationException)
                 {
@@ -42,6 +43,9 @@ namespace Game
                 }
 
             }
+
+            return neuralNetworks;
+
         }
 
         public static bool HasData()

@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 using MathNet.Numerics.LinearAlgebra;
+using UnityEngine;
 
 namespace AI
 {
     [Serializable]
     public class NeuralNetwork
     {
+        int inputCount;
+        int outputCount;
         int hiddenLayerCount;
         int neuronCount;
 
@@ -27,7 +30,7 @@ namespace AI
         public void InitialiseNetwork()
         {
             //input layer
-            inputLayer = Matrix<float>.Build.Dense(1, 9);
+            inputLayer = Matrix<float>.Build.Dense(1, inputCount);
 
             //hidden layers
             for (int i = 0; i < hiddenLayerCount; i++)
@@ -39,7 +42,7 @@ namespace AI
                 if (i == 0)
                 {
                     //weights from input layer to 1st hidden player
-                    Matrix<float> weightsToH1 = Matrix<float>.Build.Dense(9, neuronCount);
+                    Matrix<float> weightsToH1 = Matrix<float>.Build.Dense(inputCount, neuronCount);
                     weights.Add(weightsToH1);
                 }
                 else
@@ -55,10 +58,10 @@ namespace AI
             }
 
             //output layer
-            outputLayer = Matrix<float>.Build.Dense(1, 5);
+            outputLayer = Matrix<float>.Build.Dense(1, outputCount);
 
             //weights from n-1th to output layer
-            Matrix<float> weightstoOutput = Matrix<float>.Build.Dense(neuronCount, 5);
+            Matrix<float> weightstoOutput = Matrix<float>.Build.Dense(neuronCount, outputCount);
             weights.Add(weightstoOutput);
 
             //output bias
@@ -124,9 +127,60 @@ namespace AI
 
             NeuralNetworkVariable n1 = new NeuralNetworkVariable(outputLayer[0, 0], NeuralNetworkVariable.VariableType.NegativeOneToPositiveOne);
             NeuralNetworkVariable n2 = new NeuralNetworkVariable(outputLayer[0, 1], NeuralNetworkVariable.VariableType.NegativeOneToPositiveOne);
-            NeuralNetworkVariable n3 = new NeuralNetworkVariable(Sigmoid(outputLayer[0, 2]), NeuralNetworkVariable.VariableType.ZeroToPositiveOne);
+            //NeuralNetworkVariable n3 = new NeuralNetworkVariable(Sigmoid(outputLayer[0, 2]), NeuralNetworkVariable.VariableType.ZeroToPositiveOne);
+            NeuralNetworkVariable n3 = new NeuralNetworkVariable(outputLayer[0, 2], NeuralNetworkVariable.VariableType.ZeroToPositiveOne);
             return (n1,n2,n3);
         }
+
+        public (NeuralNetworkVariable, NeuralNetworkVariable, NeuralNetworkVariable) Learn(VisionTable visionTable)
+        {
+            float[] inputs = new float[visionTable.Table.Length * 2];
+
+            for (int i = 0; i < visionTable.Table.Length; i++)
+            {
+                
+                if (visionTable.Table[i] == VisionTable.SeenObjectType.Obstacle)
+                {
+                    inputs[i * 2] = 1.0f;
+                }
+                if (visionTable.Table[i] == VisionTable.SeenObjectType.Opponent)
+                {
+                    inputs[i * 2 + 1] = 1.0f;
+                }
+            }
+
+            return Learn(inputs);
+        }
+
+        public (NeuralNetworkVariable, NeuralNetworkVariable, NeuralNetworkVariable) Learn(float[] inputs)
+        {
+            for (int i = 0; i < inputCount; i++)
+            {
+                inputLayer[0, i] = inputs[i];
+                
+            }
+
+            //make those values in range [-1,1]
+            inputLayer = inputLayer.PointwiseTanh();
+
+            //compute hidden layers values
+            hiddenLayers[0] = (inputLayer * weights[0] + bias[0]).PointwiseTanh();
+
+            for (int i = 1; i < hiddenLayerCount; i++)
+            {
+                hiddenLayers[i] = (hiddenLayers[i - 1] * weights[i] + bias[i]).PointwiseTanh();
+            }
+
+            //compute output layer
+            outputLayer = (hiddenLayers[hiddenLayerCount - 1] * weights[weights.Count - 1] + bias[bias.Count - 1]).PointwiseTanh();
+
+            
+            NeuralNetworkVariable n1 = new NeuralNetworkVariable(outputLayer[0, 0], NeuralNetworkVariable.VariableType.NegativeOneToPositiveOne);
+            NeuralNetworkVariable n2 = new NeuralNetworkVariable(outputLayer[0, 1], NeuralNetworkVariable.VariableType.NegativeOneToPositiveOne);
+            NeuralNetworkVariable n3 = new NeuralNetworkVariable(outputLayer[0, 2], NeuralNetworkVariable.VariableType.ZeroToPositiveOne);
+            return (n1, n2, n3);
+        }
+
 
         public float Sigmoid(double x)
         {
@@ -137,6 +191,8 @@ namespace AI
         {
             this.hiddenLayerCount = 3;
             this.neuronCount = 30;
+            this.inputCount = 54;
+            this.outputCount = 5;
 
             InitialiseNetwork();
             InitRandomWeights();
@@ -146,10 +202,6 @@ namespace AI
         {
             NeuralNetwork child = new NeuralNetwork();
 
-            child.hiddenLayerCount = this.hiddenLayerCount;
-            child.neuronCount = this.neuronCount;
-
-            child.InitialiseNetwork();
 
 
             for (int k = 0; k < weights.Count; k++)
@@ -158,8 +210,9 @@ namespace AI
                 {
                     for (int j = 0; j < weights[k].ColumnCount; j++)
                     {
-                        float los = (float)Math.Max(0f, Math.Min(1f, (weights[k][i, j] + RandomNumber.Instance.RandNumber * 0.01f * 2.0f - 1.0f)));
+                        float los = (float)Math.Max(-1f, Math.Min(1f, (weights[k][i, j] + RandomNumber.Instance.RandNumber * 0.1f - RandomNumber.Instance.RandNumber * 0.1f)));
                         child.weights[k][i, j] = los;
+                        //child.weights[k][i, j] = weights[k][i, j];
                     }
                 }
             }

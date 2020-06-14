@@ -8,7 +8,7 @@ public class VisionTable {
 
 	public const float VisionAngle = 80;      // in degrees
 	const int VisionResolution = 3;   // in degrees
-	const float VisionRange = 30;
+	const float VisionRange = 100;
 
     public enum SeenObjectType : int {
 		None = 0,
@@ -46,7 +46,7 @@ public class VisionTable {
             )
         )
         {
-            switch (hit.collider.gameObject.name.Substring(4, 4+3))
+            switch (hit.collider.gameObject.name.Substring(5, 3))
             {
                 case "Opp":
                     return SeenObjectType.Opponent;

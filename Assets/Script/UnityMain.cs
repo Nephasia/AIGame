@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -15,21 +16,27 @@ namespace Game
 		float gameTime = 60;//2 * 60;
 		float gameTimeCD;
 
-		uint iterationSpeed = uint.Parse(PreferencesScript.iterSpeed);
-		uint iterationsNumber = 1;
+
+		uint iterationSpeed;
+		uint iterationsNumber;
+        uint currentIterationsNumber;
 
         void Start()
         {
             if (neuralNetworks == null && NetworkSerializator.HasData())
             {
-                NetworkSerializator.Load(neuralNetworks);
+                neuralNetworks = NetworkSerializator.Load();
+                Debug.Log("Network Available");
+
             }
 
-			Debug.Log(PreferencesScript.iterNum);
-		}
+			Debug.Log("Network Loaded");
+            Debug.Log(neuralNetworks);
+        }
             
 		void Update()
 		{
+            if (currentIterationsNumber == 0) currentIterationsNumber = iterationsNumber;
 
 			if (!isGameCreated) {
 
@@ -47,16 +54,24 @@ namespace Game
 				
 				isGameCreated = true;
 				gameTimeCD = gameTime;
+                iterationSpeed = uint.Parse(PreferencesScript.iterSpeed);
+                iterationsNumber = uint.Parse(PreferencesScript.iterNum);
 
 
-			} else {
+            } else {
 				// todo: the same when only one opponent left
 				if(gameTimeCD <= 0) {
-					isGameCreated = false;
+                    isGameCreated = false;
                     neuralNetworks = game.ExportNeuralNetworks();
-                    NetworkSerializator.Save(neuralNetworks);
                     neuralNetworks.NextGeneration();
-					RemoveWholeLevel();
+                    NetworkSerializator.Save(neuralNetworks);
+                    RemoveWholeLevel();
+                    currentIterationsNumber--;
+                    Debug.Log("Iterations Left: " + currentIterationsNumber);
+                    if (currentIterationsNumber <= 0)
+                    {
+                        SceneManager.LoadScene("StartMenu");
+                    }
 				} else {
 					game.MakeIteration((int)iterationSpeed);
 					gameTimeCD -= Time.deltaTime * iterationSpeed;

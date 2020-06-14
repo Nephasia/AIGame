@@ -42,7 +42,7 @@ namespace Game
         {
             get
             {
-                return HitCount * 100 + KillCount * 300 - (int)Senses.Distance;
+                return HitCount * 100 + KillCount * 300;
             }
         }
 
@@ -89,8 +89,9 @@ namespace Game
 
             //NeuralNetwork n = new NeuralNetwork(1,10);
 			NeuralNetworkVariable n1, n2, n3;
-			(n1, n2, n3) = NeuralNetwork.Learn(0,0,0);
-			int nn1, nn2, nn3;
+            //(n1, n2, n3) = NeuralNetwork.Learn(0,0,0);
+            (n1, n2, n3) = NeuralNetwork.Learn(visionTable);
+            int nn1, nn2, nn3;
 			(nn1, nn2, nn3) = InputAdapter.ConvertToInput(n1, n2, n3);
             //Inputs inputs = SimpleAI();
             Inputs inputs = new Inputs(nn1, nn2, nn3);
