@@ -189,8 +189,8 @@ namespace AI
 
         public NeuralNetwork()
         {
-            this.hiddenLayerCount = 5;
-            this.neuronCount = 60;
+            this.hiddenLayerCount = 2;
+            this.neuronCount = 20;
             this.inputCount = 54;
             this.outputCount = 5;
 
