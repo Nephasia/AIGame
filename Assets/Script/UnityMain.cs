@@ -99,6 +99,7 @@ namespace Game
 			Destroy(GameObject.Find("SpawnersContainer"));
 			Destroy(GameObject.Find("EnemyContainer"));
 			Destroy(GameObject.Find("BulletContainer"));
+			Resources.UnloadUnusedAssets();
 		}
 
 		void SetUpGround()
