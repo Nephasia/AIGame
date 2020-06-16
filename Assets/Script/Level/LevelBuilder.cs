@@ -7,7 +7,7 @@ namespace Game
 	public class LevelBuilder
 	{
 
-		int enemies = 15;
+		int enemies = 10;
 
 		public Vector2 Dimensions { get; private set; }
 
