@@ -13,9 +13,11 @@ namespace Game
 
 		bool isGameCreated = false;
 
+		float gameTime = 30;
+		float gameTimeCD;
+
 		float gameIterations = 60*30;//2 * 60;
 		float gameIterationsCD;
-
 
 		uint iterationSpeed;
 		uint iterationsNumber;
@@ -27,7 +29,6 @@ namespace Game
             {
                 neuralNetworks = NetworkSerializator.Load();
                 Debug.Log("Network Available");
-
             }
 
 			Debug.Log("Network Loaded");
@@ -39,7 +40,6 @@ namespace Game
             if (currentIterationsNumber == 0) currentIterationsNumber = iterationsNumber;
 
 			if (!isGameCreated) {
-
                  
 				game = new Game();
                 if (neuralNetworks == null)
@@ -54,13 +54,14 @@ namespace Game
 				
 				isGameCreated = true;
 				gameIterationsCD = gameIterations;
+				gameTimeCD = gameTime;
                 iterationSpeed = uint.Parse(PreferencesScript.iterSpeed);
                 iterationsNumber = uint.Parse(PreferencesScript.iterNum);
 
 
             } else {
 				// todo: the same when only one opponent left
-				if(gameIterationsCD <= 0) {
+				if(CheckIfGameEnded()) {
                     isGameCreated = false;
                     neuralNetworks = game.ExportNeuralNetworks();
                     neuralNetworks.NextGeneration();
@@ -74,12 +75,27 @@ namespace Game
                     }
 				} else {
 					game.MakeIteration((int)iterationSpeed);
-					gameIterationsCD -= 1 * iterationSpeed;
+					gameIterationsCD -= iterationSpeed;
+					gameTimeCD -= Time.deltaTime;
 				}
 
 			}
 
 			// todo : updates position and rotation of all enemies
+		}
+
+		bool CheckIfGameEnded() {
+			if(iterationSpeed > 1) {
+				if (gameIterationsCD <= 0)
+					return true;
+				else 
+					return false;
+			} else {
+				if (gameTimeCD <= 0)
+					return true;
+				else 
+					return false;
+			}
 		}
 
 		void SetWholeLevel()
@@ -93,7 +109,6 @@ namespace Game
 		}
 
 		void RemoveWholeLevel() {
-
 			Destroy(GameObject.Find("Plane"));
 			Destroy(GameObject.Find("ObstaclesContainer"));
 			Destroy(GameObject.Find("SpawnersContainer"));

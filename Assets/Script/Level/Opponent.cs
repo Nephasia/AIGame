@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AI;
 using System.Linq;
+using Math = System.Math;
 
 namespace Game
 {
@@ -38,16 +39,27 @@ namespace Game
 
 		public int KillCount { get; private set; } = 0;
 
-        public int Score
+		int leftTurns = 0;
+		int rightTurns = 0;
+
+		public int Score
         {
             get
             {
 				return
 					HitCount * 100 +
 					KillCount * 300 +
+<<<<<<< HEAD
 					(int)(System.Math.Sqrt(Senses.Distance) * 100)
 					;
 
+=======
+					LifePoints +
+					(int)(System.Math.Sqrt(Senses.Distance * 10)) +
+					(int)((leftTurns > rightTurns ? leftTurns / (float)(leftTurns + rightTurns) : rightTurns / (float)(leftTurns + rightTurns)) * 200) +
+					HitCount * 5000 / (Weapon.ShootedBullets + 1)
+				;
+>>>>>>> 74a57309cc9731be97dc8a666577ba00453a1813
             }
         }
 
@@ -96,12 +108,14 @@ namespace Game
 			NeuralNetworkVariable n1, n2, n3;
             //(n1, n2, n3) = NeuralNetwork.Learn(0,0,0);
             (n1, n2, n3) = NeuralNetwork.Learn(visionTable);
-            int nn1, nn2, nn3;
-			(nn1, nn2, nn3) = InputAdapter.ConvertToInput(n1, n2, n3);
+            int mov, rot, shoot;
+			(mov, rot, shoot) = InputAdapter.ConvertToInput(n1, n2, n3);
             //Inputs inputs = SimpleAI();
-            Inputs inputs = new Inputs(nn1, nn2, nn3);
+            Inputs inputs = new Inputs(mov, rot, shoot);
 
-            LastPosition = Position;
+			CheckTurns((Inputs.RotationEnum)System.Enum.Parse(typeof(Inputs.RotationEnum), rot.ToString()));
+
+			LastPosition = Position;
 			LastRotation = GameObject.transform.rotation;
 
             if (IsAlive) {
@@ -115,6 +129,17 @@ namespace Game
             }
         }
 
+		void CheckTurns(Inputs.RotationEnum rotationEnum) {
+			switch (rotationEnum) {
+				case Inputs.RotationEnum.Left:
+					leftTurns++;
+					break;
+				case Inputs.RotationEnum.Right:
+					rightTurns++;
+					break;
+			}
+		}
+
         private void RefreshStatistics()
         {
             Senses.Distance += (Position - LastPosition).magnitude;
@@ -122,9 +147,12 @@ namespace Game
             Senses.RotationSite = Senses.CheckIsRotating(GameObject.transform.rotation, LastRotation);
 			Senses.OponentsSeenAmount = (new List<VisionTable.SeenObjectType>(visionTable.Table)
 				.Where(x => x == VisionTable.SeenObjectType.Opponent)).Count();
-
-
         }
+
+		float RotationScore(float rotationSitePercentage) {
+			float x = rotationSitePercentage;
+			return (float)(Math.Cos(x * Math.PI / 2 * Math.Cos(x * 5.5 * Math.Cos(x * Math.PI / 2.03))) * Math.Cos(x / 1.18));
+		}
 
 		private Inputs SimpleAI()
 		{
@@ -168,7 +196,8 @@ namespace Game
 		private void Die()
 		{
 			IsAlive = false;
-			GameObject.transform.position = new Vector3(0, -20, 0);
+            int destroyPosition = 20;
+            GameObject.transform.position = new Vector3(destroyPosition, -destroyPosition, destroyPosition);
             OpponentsCreator.Instance.AliveOpponents.Remove(Id);
 		}
 
