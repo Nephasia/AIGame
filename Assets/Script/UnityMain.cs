@@ -86,12 +86,12 @@ namespace Game
 
 		bool CheckIfGameEnded() {
 			if(iterationSpeed > 1) {
-				if (gameTimeCD <= 0)
+				if (gameIterationsCD <= 0)
 					return true;
 				else 
 					return false;
 			} else {
-				if (gameIterationsCD <= 0)
+				if (gameTimeCD <= 0)
 					return true;
 				else 
 					return false;

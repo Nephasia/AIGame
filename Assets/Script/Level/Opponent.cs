@@ -42,11 +42,14 @@ namespace Game
         {
             get
             {
+
+				Debug.Log(Senses.Distance);
+
 				return
 					HitCount * 100 +
 					KillCount * 300 +
                     LifePoints +
-					(int)(System.Math.Sqrt(Senses.Distance));
+					(int)(System.Math.Sqrt(Senses.Distance * 10));
             }
         }
 
