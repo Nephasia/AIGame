@@ -45,7 +45,7 @@ namespace Game
 				return
 					HitCount * 100 +
 					KillCount * 300 +
-					(int)(System.Math.Sqrt(Senses.Distance) * 0.1)
+					(int)(System.Math.Sqrt(Senses.Distance) * 100)
 					;
 
             }
