@@ -45,9 +45,8 @@ namespace Game
 				return
 					HitCount * 100 +
 					KillCount * 300 +
-					(int)(System.Math.Sqrt(Senses.Distance) * 0.1)
-					;
-
+                    LifePoints +
+					(int)(System.Math.Sqrt(Senses.Distance));
             }
         }
 
@@ -168,7 +167,8 @@ namespace Game
 		private void Die()
 		{
 			IsAlive = false;
-			GameObject.transform.position = new Vector3(0, -20, 0);
+            int destroyPosition = 20;
+            GameObject.transform.position = new Vector3(destroyPosition, -destroyPosition, destroyPosition);
             OpponentsCreator.Instance.AliveOpponents.Remove(Id);
 		}
 
