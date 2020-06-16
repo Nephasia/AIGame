@@ -63,7 +63,6 @@ namespace Game
             return false;
         }
 
-        //TODO: ile stopnii do przeciwnika do którego brakuje najmniej stopnii w obrocie
         public int CheckMinimumAngleToOpponentToBeSeenInFront(VisionTable.SeenObjectType[] visionTable) {
 
             for (int i = 0; i < visionTable.Length; i++) {

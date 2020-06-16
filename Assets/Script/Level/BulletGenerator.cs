@@ -11,7 +11,7 @@ namespace Game
         public List<Bullet> Bullets = new List<Bullet>();
         public List<IGameObject> ObjectList => Bullets.ConvertAll(x => (IGameObject)x);
 
-        int underBoard = -10;
+        int position = 20;
 
         public BulletGenerator()
         {
@@ -20,11 +20,10 @@ namespace Game
         }
         public void CreateBullets(int amount)
         {
-            Vector3 vector3 = new Vector3(0, underBoard, 0);
-
             for (int i = 0; i < amount; i++)
             {
                 Bullet bullet = new Bullet();
+                bullet.Position = new Vector3(-position, position, -position);
                 Bullets.Add(bullet);
             }
         }

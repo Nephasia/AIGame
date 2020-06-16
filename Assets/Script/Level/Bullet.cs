@@ -24,7 +24,7 @@ namespace Game
 
         int Id { get; set; }
         int OpponentId { get; set; }
-        int Damage { get; set; } = 100;
+        int Damage { get; set; } = 50;
         float LifeTimeCD { get; set; }
         float CurrentSpeed { get; set; }
 
@@ -105,8 +105,8 @@ namespace Game
         public void Destroy()
         {
             active = false;
-            int underBoard = -10;
-            this.GameObject.transform.position = new Vector3(0, underBoard, 0);
+            int destroyPosition = 30;
+            this.GameObject.transform.position = new Vector3(destroyPosition, -destroyPosition, destroyPosition);
             BulletGenerator.Instance.Push(this);
         }
     }
