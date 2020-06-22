@@ -49,17 +49,12 @@ namespace Game
 				return
 					HitCount * 100 +
 					KillCount * 300 +
-<<<<<<< HEAD
-					(int)(System.Math.Sqrt(Senses.Distance) * 100)
-					;
-
-=======
+					(int)(System.Math.Sqrt(Senses.Distance) * 100)+
 					LifePoints +
 					(int)(System.Math.Sqrt(Senses.Distance * 10)) +
 					(int)((leftTurns > rightTurns ? leftTurns / (float)(leftTurns + rightTurns) : rightTurns / (float)(leftTurns + rightTurns)) * 200) +
 					HitCount * 5000 / (Weapon.ShootedBullets + 1)
 				;
->>>>>>> 74a57309cc9731be97dc8a666577ba00453a1813
             }
         }
 
